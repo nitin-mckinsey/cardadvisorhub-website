@@ -60,34 +60,232 @@ git push -u origin feature/fix-500-error
 ### Step 5: Set Up Hostinger Git Deployment
 
 #### Option A: Hostinger Git Integration (Recommended)
-1. Login to Hostinger control panel
-2. Go to "Git" section
-3. Click "Create Repository" 
-4. Connect to your GitHub repository
-5. Set branch: `main` (for production)
-6. Set deployment path: `/public_html/`
-7. Enable "Auto Deploy on Push"
 
-#### Option B: Manual Git Deployment
-Add this to your repository as `.github/workflows/deploy.yml`:
+**For Your Card Advisor Hub Repository:**
+
+1. **Login to Hostinger Control Panel**
+   - Go to https://hpanel.hostinger.com
+   - Login with your credentials
+
+2. **Access Git Manager**
+   - Go to "Website" section
+   - Select your domain (cardadvisorhub.com)
+   - Look for "Git" or "Git Manager" in the sidebar (usually under "Advanced" or "Developer Tools")
+   - Click "Create Repository" or "Connect Repository"
+
+3. **Connect Your GitHub Repository**
+   - **Repository URL:** `https://github.com/YOUR_USERNAME/cardadvisorhub-website.git`
+   - **Repository Type:** Public Repository
+   - **Branch:** `main` (for production deployment)
+   - **Deployment Path:** 
+     - For full website: `/public_html/`
+     - For theme only: `/public_html/wp-content/themes/genesis-sample/`
+   - **Auto Deploy:** Enable "Auto Deploy on Push"
+
+4. **Example Public Repository Connection**
+   If you want to connect to the WordPress core repository as an example:
+   - **Repository URL:** `https://github.com/WordPress/WordPress.git`
+   - **Branch:** `master` (WordPress uses master branch)
+   - **Deployment Path:** `/public_html/`
+   - This would deploy the entire WordPress core
+
+5. **Authentication for Public Repos**
+   - Public repositories don't require SSH keys or authentication
+   - Simply provide the HTTPS URL: `https://github.com/username/repository.git`
+   - Hostinger will clone and pull updates automatically
+
+6. **Hostinger Git Interface Steps:**
+   ```
+   1. Repository URL: https://github.com/YOUR_USERNAME/cardadvisorhub-website.git
+   2. Branch: main
+   3. Target Directory: public_html
+   4. Click "Create" or "Connect"
+   5. Wait for initial deployment
+   6. Enable "Auto Deploy" checkbox
+   7. Copy webhook URL: https://webhooks.hostinger.com/deploy/b389530323348f25ed5d5ca482a5877b
+   ```
+
+7. **Set Up GitHub Webhook for Auto-Deployment:**
+   
+   **Step A: Go to GitHub Repository Settings**
+   ```
+   1. Go to your GitHub repository
+   2. Click "Settings" tab
+   3. Click "Webhooks" in left sidebar
+   4. Click "Add webhook"
+   ```
+   
+   **Step B: Configure Webhook**
+   ```
+   Payload URL: https://webhooks.hostinger.com/deploy/b389530323348f25ed5d5ca482a5877b
+   Content type: application/json
+   Secret: (leave empty)
+   SSL verification: Enable SSL verification
+   Which events: Just the push event
+   Active: ✓ (checked)
+   ```
+   
+   **Step C: Test Webhook**
+   ```
+   1. Click "Add webhook"
+   2. GitHub will test the connection
+   3. You should see a green checkmark if successful
+   4. Hostinger will now auto-deploy on every push to main branch
+   ```
+
+#### Hostinger Git Manager Locations:
+
+**Where to Find Git Manager in Hostinger:**
+- **Premium Hosting:** Website → Advanced → Git Repository
+- **Business Hosting:** Website → Developer Tools → Git Manager  
+- **Cloud Hosting:** Website → Git Repository
+- If not visible, contact Hostinger support to enable Git features
+
+**Step-by-Step Hostinger Git Setup:**
+
+1. **Navigate to Git Manager**
+   ```
+   Hostinger Panel → Website → [Your Domain] → Git Repository
+   ```
+
+2. **Create New Repository Connection**
+   ```
+   Click "Create Repository" or "Connect Repository"
+   ```
+
+3. **Fill Repository Details**
+   ```
+   Repository URL: https://github.com/YOUR_USERNAME/cardadvisorhub-website.git
+   Branch: main
+   Deploy Path: /public_html/
+   Auto Deploy: ✓ Enable
+   ```
+
+4. **For Public Repositories (No Authentication Needed)**
+   ```
+   ✅ Public repos work with HTTPS URLs
+   ✅ No SSH keys required
+   ✅ No GitHub tokens needed
+   ✅ Just paste the repository URL
+   ```
+
+5. **Repository URL Examples**
+   ```
+   Your Repository: https://github.com/yourusername/cardadvisorhub-website.git
+   WordPress Core: https://github.com/WordPress/WordPress.git
+   Any Public Repo: https://github.com/owner/repository.git
+   ```
+
+#### Troubleshooting Hostinger Git Connection:
+
+**If Git Manager is Missing:**
+- Upgrade to Premium/Business hosting plan
+- Contact Hostinger support to enable Git features
+- Use Alternative Option C (SFTP) below
+
+**If Connection Fails:**
+- Ensure repository URL is correct and public
+- Try without `.git` extension
+- Check branch name (main vs master)
+- Verify deployment path exists
+If Git integration isn't available on your plan:
+
+1. **Use File Manager**
+   - Go to Hostinger Control Panel
+   - Open "File Manager"
+   - Navigate to `/public_html/`
+
+2. **Manual Upload Process**
+   - After making changes locally and pushing to GitHub
+   - Download your repository as ZIP from GitHub
+   - Extract and upload via File Manager
+   - Or use the deployment script below
+
+#### Option C: SFTP Deployment (Your Current Method Enhanced)
+Update your `.vscode/sftp.json` to work with Git:
+
+```json
+{
+    "name": "Hostinger Production",
+    "host": "files.000webhost.com",
+    "protocol": "sftp",
+    "port": 22,
+    "username": "your-username",
+    "password": "your-password",
+    "remotePath": "/public_html",
+    "uploadOnSave": false,
+    "useTempFile": false,
+    "openSsh": false,
+    "syncOption": {
+        "delete": true,
+        "skipCreate": false,
+        "ignoreExisting": false
+    },
+    "ignore": [
+        ".vscode",
+        ".git",
+        "local-development-backup",
+        "website-backup",
+        "*.md",
+        "*.ps1"
+    ]
+}
+```
+
+#### Option D: GitHub Actions Deployment
+Create `.github/workflows/deploy-hostinger.yml`:
+
 ```yaml
 name: Deploy to Hostinger
 on:
   push:
     branches: [main]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Deploy via SFTP
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Hostinger via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
-          server: your-hostinger-ftp-server.com
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          server: files.000webhost.com
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
           local-dir: ./
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .vscode/
+            *.md
+            *.ps1
+            local-development-backup/
+            website-backup/
 ```
+
+**To set up GitHub Actions:**
+1. Go to your GitHub repository
+2. Go to Settings → Secrets and variables → Actions
+3. Add these secrets:
+   - `HOSTINGER_USERNAME`: Your Hostinger SFTP username
+   - `HOSTINGER_PASSWORD`: Your Hostinger SFTP password
+
+### Hostinger-Specific Configuration:
+
+#### Find Your Hostinger SFTP Details:
+1. Login to Hostinger Control Panel
+2. Go to "Website" → Your domain
+3. Look for "SFTP Access" or "File Manager"
+4. Note down: Host, Username, Password, Port (usually 22)
+
+#### Common Hostinger Hosts:
+- `files.000webhost.com` (Free hosting)
+- `your-domain.com` (Premium hosting)
+- IP address provided in SFTP details
 
 ### Step 6: Development Workflow
 
