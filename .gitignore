@@ -11,6 +11,18 @@
 # Keep important files
 !/wp-content/
 
+# Configuration files to ignore (IMPORTANT!)
+wp-config.php
+wp-config-local.php
+.htaccess.backup
+.htaccess.bk
+
+# Database and sensitive data
+*.sql
+*.sql.gz
+*.sql.zip
+wp-content/debug.log
+
 # Ignore uploads and cache
 wp-content/uploads/
 wp-content/cache/
@@ -18,7 +30,6 @@ wp-content/backup*/
 wp-content/backups/
 wp-content/blogs.dir/
 wp-content/upgrade/
-wp-content/debug.log
 
 # Ignore specific plugins (keep only custom ones)
 wp-content/plugins/akismet/
@@ -36,18 +47,12 @@ wp-content/themes/cardadvisorhub-theme/
 # Keep our main theme
 !/wp-content/themes/genesis-sample/
 
-# Configuration files to ignore
-wp-config.php
-wp-config-local.php
-.htaccess.backup
-.htaccess.bk
-
 # Development files
 local-development-backup/
 website-backup/
 test/
 *.log
-*.sql
+*.tmp
 *.tar.gz
 *.zip
 
@@ -55,11 +60,12 @@ test/
 .vscode/
 .private/
 *.ps1
+!deploy.ps1
+!GIT-SETUP-GUIDE.md
 
 # OS files
 .DS_Store
 Thumbs.db
-*.tmp
 *.swp
 *.swo
 
@@ -73,3 +79,4 @@ npm-debug.log*
 !/manifest.json
 !/favicon.ico
 !/ads.txt
+!/wp-config-local-template.php
