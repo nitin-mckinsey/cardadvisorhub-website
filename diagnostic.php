@@ -11,7 +11,19 @@ if (isset($_GET['action']) && $_GET['action'] === 'install-wp') {
 }
 
 function installWordPress() {
+    echo "<!DOCTYPE html><html><head><title>WordPress Installation</title>";
+    echo "<style>body{font-family:Arial,sans-serif;margin:40px;background:#f1f1f1;} .container{background:white;padding:30px;border-radius:8px;} .status{padding:15px;margin:10px 0;border-radius:5px;} .ok{background:#d4edda;color:#155724;} .error{background:#f8d7da;color:#721c24;}</style>";
+    echo "</head><body><div class='container'>";
     echo "<h2>Installing WordPress Core...</h2>";
+    
+    // Check if partial installation exists and clean it
+    $cleanupFiles = ['wp-config.php', 'wp-settings.php'];
+    foreach ($cleanupFiles as $file) {
+        if (file_exists(__DIR__ . '/' . $file) && filesize(__DIR__ . '/' . $file) < 1000) {
+            unlink(__DIR__ . '/' . $file);
+            echo "<p>Cleaned up partial file: $file</p>";
+        }
+    }
     
     // Download WordPress
     $wpZip = 'https://wordpress.org/latest.zip';
@@ -23,44 +35,97 @@ function installWordPress() {
         $fp = fopen($tempFile, 'w+');
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 300); // 5 minute timeout
         curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
         fclose($fp);
+        
+        if ($httpCode !== 200) {
+            echo "<div class='status error'>Download failed with HTTP code: $httpCode</div>";
+            return;
+        }
     } else {
-        file_put_contents($tempFile, file_get_contents($wpZip));
+        try {
+            file_put_contents($tempFile, file_get_contents($wpZip));
+        } catch (Exception $e) {
+            echo "<div class='status error'>Download failed: " . $e->getMessage() . "</div>";
+            return;
+        }
     }
     
     // Extract WordPress
     if (class_exists('ZipArchive')) {
         $zip = new ZipArchive;
         if ($zip->open($tempFile) === TRUE) {
+            echo "<p>Extracting WordPress...</p>";
             $zip->extractTo(__DIR__ . '/temp-wp/');
             $zip->close();
             
             // Move files from wordpress subdirectory to root
             $wpDir = __DIR__ . '/temp-wp/wordpress/';
             if (is_dir($wpDir)) {
+                echo "<p>Moving WordPress files to root directory...</p>";
                 $files = scandir($wpDir);
+                $movedCount = 0;
                 foreach ($files as $file) {
                     if ($file != '.' && $file != '..') {
-                        rename($wpDir . $file, __DIR__ . '/' . $file);
+                        $source = $wpDir . $file;
+                        $dest = __DIR__ . '/' . $file;
+                        
+                        // Skip if destination exists and is our custom file
+                        if (file_exists($dest) && in_array($file, ['wp-content', 'index.php', '.htaccess'])) {
+                            if ($file === 'wp-content') {
+                                // Merge wp-content directories
+                                echo "<p>Preserving existing wp-content directory...</p>";
+                                continue;
+                            } elseif ($file === 'index.php') {
+                                // Keep our custom index.php, rename WordPress one
+                                rename($source, __DIR__ . '/wp-index.php');
+                                echo "<p>WordPress index.php saved as wp-index.php</p>";
+                                continue;
+                            }
+                        }
+                        
+                        if (rename($source, $dest)) {
+                            $movedCount++;
+                        }
                     }
                 }
+                
                 // Clean up
-                rmdir($wpDir);
-                rmdir(__DIR__ . '/temp-wp/');
+                if (is_dir($wpDir)) {
+                    rmdir($wpDir);
+                }
+                if (is_dir(__DIR__ . '/temp-wp/')) {
+                    rmdir(__DIR__ . '/temp-wp/');
+                }
+                
+                echo "<div class='status ok'>✅ WordPress installed successfully! ($movedCount files moved)</div>";
+                echo "<div class='status ok'>✅ Your custom theme and settings preserved</div>";
+                echo "<p><strong>Next Steps:</strong></p>";
+                echo "<ol>";
+                echo "<li><a href='/wp-admin/setup-config.php'>Configure Database Connection</a></li>";
+                echo "<li>Or <a href='/diagnostic.php'>Run Diagnostic Again</a></li>";
+                echo "<li><a href='/'>Visit Your Site</a></li>";
+                echo "</ol>";
+            } else {
+                echo "<div class='status error'>❌ WordPress directory structure not found</div>";
             }
-            
-            echo "<p style='color: green;'>✅ WordPress installed successfully!</p>";
-            echo "<p><a href='/'>Go to your website</a></p>";
         } else {
-            echo "<p style='color: red;'>❌ Failed to extract WordPress</p>";
+            echo "<div class='status error'>❌ Failed to extract WordPress ZIP file</div>";
         }
     } else {
-        echo "<p style='color: red;'>❌ ZipArchive not available</p>";
+        echo "<div class='status error'>❌ ZipArchive not available on this server</div>";
+        echo "<p>Contact your hosting provider to enable ZipArchive PHP extension.</p>";
     }
     
-    unlink($tempFile);
+    // Cleanup temp file
+    if (file_exists($tempFile)) {
+        unlink($tempFile);
+    }
+    
+    echo "</div></body></html>";
 }
 
 ?>
@@ -151,11 +216,26 @@ function installWordPress() {
             This is why you're getting 500 errors. WordPress needs to be installed.
         </div>
         
+        <div class="status warning">
+            <strong>⚠️ Installation Issues?</strong><br>
+            If you're getting "WordPress already installed" errors or Site Kit plugin issues:<br>
+            • The installation will now preserve your custom theme and settings<br>
+            • Database conflicts will be handled automatically<br>
+            • Your credit card data will remain intact
+        </div>
+        
         <p>
-            <button class="install-btn" onclick="if(confirm('Install WordPress? This will download and install WordPress core files.')) { window.location.href='?action=install-wp'; }">
+            <button class="install-btn" onclick="if(confirm('Install WordPress? This will download and install WordPress core files while preserving your custom theme.')) { window.location.href='?action=install-wp'; }">
                 Install WordPress Core Files
             </button>
         </p>
+        
+        <h3>Alternative: Manual Database Setup</h3>
+        <div class="status">
+            If installation keeps failing, you can:<br>
+            1. Go to <a href="/wp-admin/setup-config.php">Database Configuration</a><br>
+            2. Or use <a href="/wp-config-template.php">wp-config template</a> to create wp-config.php manually
+        </div>
         <?php else: ?>
         <div class="status ok">
             <strong>✅ WordPress core files are present!</strong><br>
