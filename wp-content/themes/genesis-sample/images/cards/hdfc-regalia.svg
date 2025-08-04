@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="190" viewBox="0 0 300 190">
+  <!-- Card Background - More accurate Regalia colors -->
+  <defs>
+    <linearGradient id="regaliaBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#722F37;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#8B0000;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#A0001A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5D1F26;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#DAA520;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="chipGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFE55C;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#DAA520;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Card base with more realistic rounded corners -->
+  <rect width="300" height="190" rx="12" ry="12" fill="url(#regaliaBg)" stroke="#5D1F26" stroke-width="0.5"/>
+  
+  <!-- Subtle card pattern overlay -->
+  <rect width="300" height="190" rx="12" ry="12" fill="url(#regaliaBg)" opacity="0.1"/>
+  
+  <!-- HDFC Bank logo - more accurate positioning -->
+  <text x="25" y="30" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" letter-spacing="0.5px">HDFC</text>
+  <text x="25" y="45" font-family="Arial, sans-serif" font-size="10" font-weight="normal" fill="#C0C0C0" letter-spacing="0.3px">BANK</text>
+  
+  <!-- Regalia branding - more elegant styling -->
+  <text x="230" y="35" font-family="Times, serif" font-size="18" font-weight="normal" fill="#DAA520" text-anchor="end" letter-spacing="1px">Regalia</text>
+  
+  <!-- Gold decorative line -->
+  <rect x="25" y="55" width="250" height="1" fill="url(#goldAccent)" opacity="0.6"/>
+  
+  <!-- More realistic chip -->
+  <rect x="25" y="75" width="28" height="22" rx="4" ry="4" fill="url(#chipGrad)" stroke="#B8860B" stroke-width="0.5"/>
+  <!-- Chip contact grid -->
+  <g fill="#B8860B" opacity="0.8">
+    <rect x="27" y="77" width="3" height="3" rx="0.5"/>
+    <rect x="31" y="77" width="3" height="3" rx="0.5"/>
+    <rect x="35" y="77" width="3" height="3" rx="0.5"/>
+    <rect x="39" y="77" width="3" height="3" rx="0.5"/>
+    <rect x="43" y="77" width="3" height="3" rx="0.5"/>
+    <rect x="47" y="77" width="3" height="3" rx="0.5"/>
+    
+    <rect x="27" y="81" width="3" height="3" rx="0.5"/>
+    <rect x="31" y="81" width="3" height="3" rx="0.5"/>
+    <rect x="35" y="81" width="3" height="3" rx="0.5"/>
+    <rect x="39" y="81" width="3" height="3" rx="0.5"/>
+    <rect x="43" y="81" width="3" height="3" rx="0.5"/>
+    <rect x="47" y="81" width="3" height="3" rx="0.5"/>
+    
+    <rect x="27" y="85" width="3" height="3" rx="0.5"/>
+    <rect x="31" y="85" width="3" height="3" rx="0.5"/>
+    <rect x="35" y="85" width="3" height="3" rx="0.5"/>
+    <rect x="39" y="85" width="3" height="3" rx="0.5"/>
+    <rect x="43" y="85" width="3" height="3" rx="0.5"/>
+    <rect x="47" y="85" width="3" height="3" rx="0.5"/>
+    
+    <rect x="27" y="89" width="3" height="3" rx="0.5"/>
+    <rect x="31" y="89" width="3" height="3" rx="0.5"/>
+    <rect x="35" y="89" width="3" height="3" rx="0.5"/>
+    <rect x="39" y="89" width="3" height="3" rx="0.5"/>
+    <rect x="43" y="89" width="3" height="3" rx="0.5"/>
+    <rect x="47" y="89" width="3" height="3" rx="0.5"/>
+  </g>
+  
+  <!-- Card number with more authentic spacing -->
+  <text x="25" y="125" font-family="Courier, monospace" font-size="14" font-weight="bold" fill="#FFFFFF" letter-spacing="3px">5123 4567 8901 2345</text>
+  
+  <!-- Cardholder details -->
+  <text x="25" y="145" font-family="Arial, sans-serif" font-size="8" fill="#C0C0C0" letter-spacing="0.5px">CARDHOLDER NAME</text>
+  <text x="25" y="160" font-family="Arial, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF" letter-spacing="0.5px">JOHN DOE</text>
+  
+  <!-- Valid thru -->
+  <text x="25" y="175" font-family="Arial, sans-serif" font-size="8" fill="#C0C0C0" letter-spacing="0.5px">VALID THRU</text>
+  <text x="80" y="175" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="#FFFFFF">12/28</text>
+  
+  <!-- More accurate Mastercard logo -->
+  <g transform="translate(230, 145)">
+    <circle cx="0" cy="0" r="12" fill="#FF5F00"/>
+    <circle cx="12" cy="0" r="12" fill="#EB001B"/>
+    <circle cx="6" cy="0" r="12" fill="#FF5F00" opacity="0.7"/>
+    <text x="6" y="20" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="#FFFFFF" text-anchor="middle">mastercard</text>
+  </g>
+  
+  <!-- Premium indicator -->
+  <text x="275" y="25" font-family="Arial, sans-serif" font-size="7" fill="#DAA520" text-anchor="end" letter-spacing="0.5px">PREMIUM</text>
+  
+  <!-- More accurate contactless symbol -->
+  <g transform="translate(65, 75)" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.8">
+    <path d="M 0 10 Q 10 5 0 0 Q 5 2.5 0 0 Q 10 5 0 10"/>
+    <path d="M 3 8 Q 8 6 3 4 Q 5.5 5 3 4 Q 8 6 3 8"/>
+    <path d="M 5 7 Q 7 6.5 5 6 Q 6 6.25 5 6 Q 7 6.5 5 7"/>
+  </g>
+  
+  <!-- Subtle HDFC watermark -->
+  <text x="150" y="100" font-family="Arial, sans-serif" font-size="40" fill="#FFFFFF" opacity="0.05" text-anchor="middle" font-weight="bold">HDFC</text>
+</svg>

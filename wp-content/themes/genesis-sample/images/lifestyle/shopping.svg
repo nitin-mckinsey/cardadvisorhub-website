@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="120" viewBox="0 0 300 120">
+  <defs>
+    <linearGradient id="shoppingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF69B4;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FF1493;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#DC143C;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="120" fill="url(#shoppingGrad)"/>
+  
+  <!-- Shopping bags -->
+  <rect x="50" y="40" width="40" height="50" fill="#FFB6C1" rx="5"/>
+  <rect x="110" y="35" width="35" height="55" fill="#FFC0CB" rx="4"/>
+  <rect x="160" y="45" width="45" height="45" fill="#FFE4E1" rx="5"/>
+  <rect x="220" y="30" width="50" height="60" fill="#FFEFD5" rx="6"/>
+  
+  <!-- Handles -->
+  <ellipse cx="70" cy="40" rx="8" ry="3" fill="none" stroke="#8B008B" stroke-width="2"/>
+  <ellipse cx="127" cy="35" rx="7" ry="3" fill="none" stroke="#8B008B" stroke-width="2"/>
+  <ellipse cx="182" cy="45" rx="9" ry="3" fill="none" stroke="#8B008B" stroke-width="2"/>
+  <ellipse cx="245" cy="30" rx="10" ry="3" fill="none" stroke="#8B008B" stroke-width="2"/>
+  
+  <!-- Store logos/patterns -->
+  <circle cx="70" cy="65" r="8" fill="#FF1493"/>
+  <rect x="120" y="55" width="15" height="15" fill="#DC143C" rx="2"/>
+  <polygon points="172,60 182,65 192,60 187,75 177,75" fill="#FF69B4"/>
+  <text x="245" y="65" font-family="Arial" font-size="12" font-weight="bold" fill="#8B008B" text-anchor="middle">SALE</text>
+  
+  <!-- Credit card icon -->
+  <rect x="20" y="20" width="25" height="15" fill="#800020" rx="2"/>
+  <text x="32" y="30" font-family="Arial" font-size="6" font-weight="bold" fill="white" text-anchor="middle">HDFC</text>
+</svg>

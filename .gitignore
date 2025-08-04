@@ -1,0 +1,75 @@
+# WordPress Git Ignore
+# Ignore WordPress core files
+/wp-admin/
+/wp-includes/
+/wp-*.php
+/index.php
+/readme.html
+/wp-config-sample.php
+/license.txt
+
+# Keep important files
+!/wp-content/
+
+# Ignore uploads and cache
+wp-content/uploads/
+wp-content/cache/
+wp-content/backup*/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/upgrade/
+wp-content/debug.log
+
+# Ignore specific plugins (keep only custom ones)
+wp-content/plugins/akismet/
+wp-content/plugins/hello.php
+
+# Ignore themes except our custom theme
+wp-content/themes/twenty*/
+wp-content/themes/astra/
+wp-content/themes/generatepress/
+wp-content/themes/genesis/
+wp-content/themes/genesis-sample-old/
+wp-content/themes/cardadvisorhub/
+wp-content/themes/cardadvisorhub-theme/
+
+# Keep our main theme
+!/wp-content/themes/genesis-sample/
+
+# Configuration files to ignore
+wp-config.php
+wp-config-local.php
+.htaccess.backup
+.htaccess.bk
+
+# Development files
+local-development-backup/
+website-backup/
+test/
+*.log
+*.sql
+*.tar.gz
+*.zip
+
+# VS Code and development
+.vscode/
+.private/
+*.ps1
+
+# OS files
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+*.swo
+
+# Node modules if any
+node_modules/
+npm-debug.log*
+
+# Keep essential SEO and config files
+!/robots.txt
+!/sitemap.xml
+!/manifest.json
+!/favicon.ico
+!/ads.txt

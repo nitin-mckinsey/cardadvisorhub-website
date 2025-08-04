@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Credit Card PNG Generator</title>
+    <style>
+        .card-container {
+            display: none; /* Hidden during generation */
+        }
+        
+        .credit-card {
+            width: 320px;
+            height: 200px;
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Individual Card Styles */
+        .icici-amazon {
+            background: linear-gradient(135deg, #232F3E 0%, #FF9900 50%, #146EB4 100%);
+        }
+
+        .sbi-cashback {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFD700 100%);
+        }
+
+        .hdfc-regalia {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        .axis-magnus {
+            background: linear-gradient(135deg, #8B0000 0%, #B22222 50%, #DC143C 100%);
+        }
+
+        .flipkart-axis {
+            background: linear-gradient(135deg, #2874F0 0%, #1565C0 50%, #0D47A1 100%);
+        }
+
+        .hdfc-millennia {
+            background: linear-gradient(135deg, #4A90E2 0%, #7B68EE 50%, #9370DB 100%);
+        }
+
+        .axis-ace {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 50%, #1B5E20 100%);
+        }
+
+        /* Card Elements */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .bank-logo {
+            font-size: 16px;
+            font-weight: bold;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-network {
+            font-size: 20px;
+            font-weight: bold;
+            opacity: 0.9;
+        }
+
+        .chip {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(145deg, #FFD700, #FFA500);
+            border-radius: 6px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .chip::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 15px;
+            background: repeating-linear-gradient(90deg, #B8860B 0px, #B8860B 1px, #FFD700 1px, #FFD700 2px);
+            border-radius: 2px;
+        }
+
+        .card-number {
+            font-size: 18px;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        .cardholder {
+            font-size: 12px;
+        }
+
+        .cardholder-name {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 3px;
+        }
+
+        .expiry {
+            text-align: right;
+            font-size: 12px;
+        }
+
+        .expiry-date {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 3px;
+        }
+
+        /* Decorative Elements */
+        .card-decoration {
+            position: absolute;
+            right: -40px;
+            top: -40px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            opacity: 0.4;
+        }
+
+        .card-decoration-2 {
+            position: absolute;
+            left: -25px;
+            bottom: -25px;
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <!-- ICICI Amazon -->
+        <div class="credit-card icici-amazon" id="icici-amazon-card">
+            <div class="card-decoration"></div>
+            <div class="card-decoration-2"></div>
+            <div class="card-header">
+                <div class="bank-logo">ICICI BANK</div>
+                <div class="card-network">VISA</div>
+            </div>
+            <div class="chip"></div>
+            <div class="card-number">**** **** **** 9012</div>
+            <div class="card-footer">
+                <div class="cardholder">
+                    <div>CARDHOLDER NAME</div>
+                    <div class="cardholder-name">AMAZON PAY</div>
+                </div>
+                <div class="expiry">
+                    <div>VALID THRU</div>
+                    <div class="expiry-date">12/28</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SBI Cashback -->
+        <div class="credit-card sbi-cashback" id="sbi-cashback-card">
+            <div class="card-decoration"></div>
+            <div class="card-decoration-2"></div>
+            <div class="card-header">
+                <div class="bank-logo">SBI CARD</div>
+                <div class="card-network">VISA</div>
+            </div>
+            <div class="chip"></div>
+            <div class="card-number">**** **** **** 5678</div>
+            <div class="card-footer">
+                <div class="cardholder">
+                    <div>CARDHOLDER NAME</div>
+                    <div class="cardholder-name">CASHBACK CARD</div>
+                </div>
+                <div class="expiry">
+                    <div>VALID THRU</div>
+                    <div class="expiry-date">12/28</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HDFC Regalia -->
+        <div class="credit-card hdfc-regalia" id="hdfc-regalia-card">
+            <div class="card-decoration"></div>
+            <div class="card-decoration-2"></div>
+            <div class="card-header">
+                <div class="bank-logo">HDFC BANK</div>
+                <div class="card-network">VISA</div>
+            </div>
+            <div class="chip"></div>
+            <div class="card-number">**** **** **** 1234</div>
+            <div class="card-footer">
+                <div class="cardholder">
+                    <div>CARDHOLDER NAME</div>
+                    <div class="cardholder-name">REGALIA</div>
+                </div>
+                <div class="expiry">
+                    <div>VALID THRU</div>
+                    <div class="expiry-date">12/28</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional cards can be added here -->
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        // Auto-generate all card images when page loads
+        window.onload = function() {
+            const cards = [
+                'icici-amazon-card',
+                'sbi-cashback-card', 
+                'hdfc-regalia-card'
+            ];
+
+            cards.forEach((cardId, index) => {
+                setTimeout(() => {
+                    generateCardImage(cardId);
+                }, index * 1000); // Stagger generation
+            });
+        };
+
+        function generateCardImage(cardId) {
+            const cardElement = document.getElementById(cardId);
+            
+            html2canvas(cardElement, {
+                backgroundColor: null,
+                scale: 2,
+                width: 320,
+                height: 200
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = cardId.replace('-card', '') + '-card.png';
+                link.href = canvas.toDataURL();
+                link.click();
+                console.log('Generated: ' + cardId);
+            });
+        }
+    </script>
+</body>
+</html>

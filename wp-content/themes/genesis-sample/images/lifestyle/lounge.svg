@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="150" viewBox="0 0 300 150">
+  <defs>
+    <linearGradient id="loungeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B4513;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#CD853F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#DEB887;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="150" fill="url(#loungeGrad)"/>
+  
+  <!-- Lounge floor -->
+  <rect x="0" y="100" width="300" height="50" fill="#F5DEB3"/>
+  
+  <!-- Comfortable seating -->
+  <rect x="30" y="80" width="60" height="40" fill="#8B0000" rx="5"/>
+  <rect x="35" y="75" width="50" height="10" fill="#A0522D" rx="2"/>
+  
+  <rect x="120" y="85" width="50" height="35" fill="#800080" rx="4"/>
+  <rect x="125" y="80" width="40" height="8" fill="#9932CC" rx="2"/>
+  
+  <rect x="200" y="85" width="70" height="35" fill="#2F4F4F" rx="5"/>
+  <rect x="205" y="80" width="60" height="8" fill="#708090" rx="2"/>
+  
+  <!-- Coffee table -->
+  <ellipse cx="150" cy="110" rx="25" ry="15" fill="#654321"/>
+  <rect x="140" y="125" width="5" height="15" fill="#654321"/>
+  <rect x="155" y="125" width="5" height="15" fill="#654321"/>
+  
+  <!-- Refreshments on table -->
+  <circle cx="140" cy="110" r="3" fill="#8B4513"/>
+  <circle cx="160" cy="110" r="3" fill="#4169E1"/>
+  <rect x="148" y="105" width="4" height="8" fill="#FFD700" rx="1"/>
+  
+  <!-- Chandelier -->
+  <circle cx="150" cy="30" r="20" fill="#FFD700" opacity="0.7"/>
+  <circle cx="150" cy="25" r="15" fill="#FFA500" opacity="0.8"/>
+  <circle cx="150" cy="20" r="10" fill="#FF8C00" opacity="0.9"/>
+  
+  <!-- Chandelier crystals -->
+  <circle cx="140" cy="35" r="2" fill="#FFD700"/>
+  <circle cx="145" cy="40" r="2" fill="#FFD700"/>  
+  <circle cx="155" cy="40" r="2" fill="#FFD700"/>
+  <circle cx="160" cy="35" r="2" fill="#FFD700"/>
+  
+  <!-- Windows with view -->
+  <rect x="10" y="40" width="20" height="30" fill="#87CEEB" rx="2"/>
+  <rect x="270" y="40" width="20" height="30" fill="#87CEEB" rx="2"/>
+  
+  <!-- Lounge entrance sign -->
+  <rect x="110" y="10" width="80" height="15" fill="#800020" rx="2"/>
+  <text x="150" y="20" font-family="Arial" font-size="10" font-weight="bold" fill="white" text-anchor="middle">VIP LOUNGE</text>
+  
+  <!-- Decorative plants -->
+  <rect x="20" y="120" width="8" height="20" fill="#8B4513"/>
+  <circle cx="24" cy="115" r="8" fill="#228B22"/>
+  
+  <rect x="280" y="115" width="8" height="25" fill="#8B4513"/>
+  <circle cx="284" cy="110" r="10" fill="#32CD32"/>
+</svg>

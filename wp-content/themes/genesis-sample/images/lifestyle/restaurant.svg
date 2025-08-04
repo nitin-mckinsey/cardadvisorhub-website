@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="120" viewBox="0 0 300 120">
+  <defs>
+    <linearGradient id="restaurantGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFB84D;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FF8C42;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E85D04;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="120" fill="url(#restaurantGrad)"/>
+  
+  <!-- Restaurant building -->
+  <rect x="50" y="40" width="200" height="60" fill="#8B4513" rx="5"/>
+  <rect x="60" y="50" width="180" height="50" fill="#DEB887" rx="3"/>
+  
+  <!-- Door -->
+  <rect x="130" y="65" width="40" height="35" fill="#654321" rx="3"/>
+  <circle cx="160" cy="82" r="2" fill="#FFD700"/>
+  
+  <!-- Windows -->
+  <rect x="80" y="55" width="30" height="20" fill="#87CEEB" rx="2"/>
+  <rect x="190" y="55" width="30" height="20" fill="#87CEEB" rx="2"/>
+  
+  <!-- Roof -->
+  <polygon points="40,40 150,20 260,40" fill="#8B0000" opacity="0.8"/>
+  
+  <!-- Sign -->
+  <rect x="110" y="25" width="80" height="15" fill="#800020" rx="2"/>
+  <text x="150" y="35" font-family="Arial" font-size="10" font-weight="bold" fill="white" text-anchor="middle">RESTAURANT</text>
+  
+  <!-- Decorative elements -->
+  <circle cx="40" cy="90" r="8" fill="#228B22" fill-opacity="0.7"/>
+  <circle cx="260" cy="85" r="10" fill="#228B22" fill-opacity="0.6"/>
+  <circle cx="25" cy="70" r="6" fill="#32CD32" fill-opacity="0.8"/>
+</svg>

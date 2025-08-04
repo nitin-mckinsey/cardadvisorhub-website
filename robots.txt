@@ -1,0 +1,34 @@
+User-agent: *
+Allow: /
+
+User-agent: *
+Allow: /
+
+# Allow crawling of important resources including favicon
+Allow: /favicon.ico
+Allow: /manifest.json
+Allow: /wp-content/themes/genesis-sample/images/
+Allow: *.css
+Allow: *.js
+
+# Sitemap location
+Sitemap: https://cardadvisorhub.com/sitemap.xml
+
+# Allow specific important pages
+Allow: /compare-cards/
+Allow: /compare-cards-detail/
+Allow: /cashback-cards/
+Allow: /travel-cards/
+Allow: /premium-cards/
+Allow: /hdfc-regalia/
+Allow: /sbi-cashback/
+Allow: /icici-amazon/
+Allow: /axis-magnus/
+
+# Disallow unnecessary WordPress files
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/themes/*/lib/
+Disallow: /readme.html
+Disallow: /license.txt

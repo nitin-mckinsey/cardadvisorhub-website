@@ -1,0 +1,16 @@
+<svg width="300" height="189" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="millenniaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2E8B57;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#32CD32;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="189" rx="12" ry="12" fill="url(#millenniaGradient)" />
+  <text x="20" y="30" font-family="Arial, sans-serif" font-size="14" fill="white">HDFC BANK</text>
+  <text x="20" y="50" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">MILLENNIA</text>
+  <text x="20" y="90" font-family="Arial, sans-serif" font-size="16" fill="white" letter-spacing="2px">•••• •••• •••• ••••</text>
+  <text x="20" y="160" font-family="Arial, sans-serif" font-size="12" fill="white">CARD HOLDER</text>
+  <text x="240" y="160" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">VISA</text>
+  <circle cx="260" cy="40" r="15" fill="white" opacity="0.3"/>
+  <circle cx="280" cy="40" r="15" fill="white" opacity="0.2"/>
+</svg>

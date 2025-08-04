@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realistic Bank Credit Cards - Exact Bank Designs</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .card-wrapper {
+            text-align: center;
+        }
+
+        .card {
+            width: 420px;
+            height: 264px;
+            border-radius: 16px;
+            position: relative;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        }
+
+        /* HDFC Regalia - Dark Blue Premium Design */
+        .hdfc-regalia {
+            background: linear-gradient(135deg, #0a1942 0%, #1a2863 100%);
+            position: relative;
+        }
+
+        .hdfc-regalia::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 264"><defs><pattern id="regalia-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="420" height="264" fill="url(%23regalia-pattern)"/></svg>');
+            opacity: 0.3;
+        }
+
+        /* SBI Cashback - Orange/Blue Design */
+        .sbi-cashback {
+            background: linear-gradient(135deg, #ff6b35 0%, #1e88e5 100%);
+            position: relative;
+        }
+
+        .sbi-cashback::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        /* ICICI Amazon - Amazon Brand Colors */
+        .icici-amazon {
+            background: linear-gradient(45deg, #232f3e 0%, #232f3e 60%, #ff9900 100%);
+            position: relative;
+        }
+
+        .icici-amazon::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 50px;
+            background: #ff9900;
+            clip-path: polygon(100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Axis Magnus - Burgundy Premium */
+        .axis-magnus {
+            background: linear-gradient(135deg, #8b0000 0%, #b22222 50%, #654321 100%);
+            position: relative;
+        }
+
+        .axis-magnus::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        /* Flipkart Axis - Flipkart Blue */
+        .flipkart-axis {
+            background: linear-gradient(135deg, #2874f0 0%, #1565c0 100%);
+            position: relative;
+        }
+
+        .flipkart-axis::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 150px;
+            height: 80px;
+            background: rgba(255,255,255,0.1);
+            clip-path: polygon(0 100%, 100% 100%, 0 0);
+        }
+
+        /* HDFC Millennia - Purple/Blue Gradient */
+        .hdfc-millennia {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+        .hdfc-millennia::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+            border-radius: 50%;
+        }
+
+        /* Axis Ace - Green Design */
+        .axis-ace {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+            position: relative;
+        }
+
+        .axis-ace::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 0 16px 0 50px;
+        }
+
+        /* Card Content Styling */
+        .card-content {
+            position: relative;
+            z-index: 2;
+            padding: 24px;
+            height: 100%;
+            box-sizing: border-box;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .bank-name {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-network {
+            font-size: 20px;
+            font-weight: 700;
+            opacity: 0.9;
+        }
+
+        .chip {
+            width: 48px;
+            height: 38px;
+            background: linear-gradient(145deg, #ffd700, #ffb347);
+            border-radius: 6px;
+            margin-bottom: 16px;
+            position: relative;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .chip::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 32px;
+            height: 22px;
+            background: repeating-linear-gradient(90deg, #b8860b 0px, #b8860b 1px, #ffd700 1px, #ffd700 3px);
+            border-radius: 2px;
+        }
+
+        .card-number {
+            font-size: 20px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .card-holder {
+            font-size: 12px;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+
+        .card-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        .expiry-section {
+            text-align: right;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .expiry-date {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        /* Card Specific Branding */
+        .hdfc-regalia .card-name {
+            background: linear-gradient(90deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .icici-amazon .bank-name {
+            background: rgba(255,153,0,0.2);
+        }
+
+        .icici-amazon .card-name {
+            color: #ff9900;
+        }
+
+        /* Download Button */
+        .download-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        /* Batch Download Section */
+        .batch-download {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .batch-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            box-shadow: 0 6px 25px rgba(245,87,108,0.3);
+        }
+
+        .batch-btn:hover {
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏦 Realistic Bank Credit Cards</h1>
+        <p style="text-align: center; color: #666; font-size: 18px; margin-bottom: 40px;">
+            Exact bank-issued designs that match real credit cards used in India
+        </p>
+
+        <div class="cards-grid">
+            <!-- HDFC Regalia -->
+            <div class="card-wrapper">
+                <div class="card hdfc-regalia" id="hdfc-regalia-card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="bank-name">HDFC BANK</div>
+                            <div class="card-network">VISA</div>
+                        </div>
+                        <div class="chip"></div>
+                        <div class="card-number">5239 1678 9012 3456</div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-holder">Card Member Since</div>
+                                <div class="card-name">REGALIA</div>
+                            </div>
+                            <div class="expiry-section">
+                                <div>VALID THRU</div>
+                                <div class="expiry-date">12/28</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-title">HDFC Regalia Credit Card</div>
+                <button class="download-btn" onclick="downloadCard('hdfc-regalia-card', 'hdfc-regalia')">
+                    📸 Download PNG
+                </button>
+            </div>
+
+            <!-- SBI Cashback -->
+            <div class="card-wrapper">
+                <div class="card sbi-cashback" id="sbi-cashback-card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="bank-name">SBI CARD</div>
+                            <div class="card-network">VISA</div>
+                        </div>
+                        <div class="chip"></div>
+                        <div class="card-number">4532 8901 2345 6789</div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-holder">Card Member</div>
+                                <div class="card-name">CASHBACK</div>
+                            </div>
+                            <div class="expiry-section">
+                                <div>VALID THRU</div>
+                                <div class="expiry-date">08/29</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-title">SBI Cashback Credit Card</div>
+                <button class="download-btn" onclick="downloadCard('sbi-cashback-card', 'sbi-cashback')">
+                    📸 Download PNG
+                </button>
+            </div>
+
+            <!-- ICICI Amazon -->
+            <div class="card-wrapper">
+                <div class="card icici-amazon" id="icici-amazon-card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="bank-name">ICICI BANK</div>
+                            <div class="card-network">VISA</div>
+                        </div>
+                        <div class="chip"></div>
+                        <div class="card-number">5239 4567 8901 2345</div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-holder">Card Member</div>
+                                <div class="card-name">AMAZON PAY</div>
+                            </div>
+                            <div class="expiry-section">
+                                <div>VALID THRU</div>
+                                <div class="expiry-date">03/29</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-title">ICICI Amazon Pay Credit Card</div>
+                <button class="download-btn" onclick="downloadCard('icici-amazon-card', 'icici-amazon')">
+                    📸 Download PNG
+                </button>
+            </div>
+
+            <!-- Axis Magnus -->
+            <div class="card-wrapper">
+                <div class="card axis-magnus" id="axis-magnus-card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="bank-name">AXIS BANK</div>
+                            <div class="card-network">VISA</div>
+                        </div>
+                        <div class="chip"></div>
+                        <div class="card-number">5239 7890 1234 5678</div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-holder">Platinum Member</div>
+                                <div class="card-name">MAGNUS</div>
+                            </div>
+                            <div class="expiry-section">
+                                <div>VALID THRU</div>
+                                <div class="expiry-date">06/29</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-title">Axis Magnus Credit Card</div>
+                <button class="download-btn" onclick="downloadCard('axis-magnus-card', 'axis-magnus')">
+                    📸 Download PNG
+                </button>
+            </div>
+
+            <!-- Flipkart Axis -->
+            <div class="card-wrapper">
+                <div class="card flipkart-axis" id="flipkart-axis-card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="bank-name">AXIS BANK</div>
+                            <div class="card-network">VISA</div>
+                        </div>
+                        <div class="chip"></div>
+                        <div class="card-number">5239 2345 6789 0123</div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-holder">Card Member</div>
+                                <div class="card-name">FLIPKART</div>
+                            </div>
+                            <div class="expiry-section">
+                                <div>VALID THRU</div>
+                                <div class="expiry-date">11/28</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-title">Flipkart Axis Credit Card</div>
+                <button class="download-btn" onclick="downloadCard('flipkart-axis-card', 'flipkart-axis')">
+                    📸 Download PNG
+                </button>
+            </div>
+
+            <!-- HDFC Millennia -->
+            <div class="card-wrapper">
+                <div class="card hdfc-millennia" id="hdfc-millennia-card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="bank-name">HDFC BANK</div>
+                            <div class="card-network">VISA</div>
+                        </div>
+                        <div class="chip"></div>
+                        <div class="card-number">5239 5678 9012 3456</div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-holder">Card Member</div>
+                                <div class="card-name">MILLENNIA</div>
+                            </div>
+                            <div class="expiry-section">
+                                <div>VALID THRU</div>
+                                <div class="expiry-date">04/29</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-title">HDFC Millennia Credit Card</div>
+                <button class="download-btn" onclick="downloadCard('hdfc-millennia-card', 'hdfc-millennia')">
+                    📸 Download PNG
+                </button>
+            </div>
+
+            <!-- Axis Ace -->
+            <div class="card-wrapper">
+                <div class="card axis-ace" id="axis-ace-card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="bank-name">AXIS BANK</div>
+                            <div class="card-network">VISA</div>
+                        </div>
+                        <div class="chip"></div>
+                        <div class="card-number">5239 8901 2345 6789</div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-holder">Card Member</div>
+                                <div class="card-name">ACE</div>
+                            </div>
+                            <div class="expiry-section">
+                                <div>VALID THRU</div>
+                                <div class="expiry-date">09/28</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-title">Axis Ace Credit Card</div>
+                <button class="download-btn" onclick="downloadCard('axis-ace-card', 'axis-ace')">
+                    📸 Download PNG
+                </button>
+            </div>
+        </div>
+
+        <div class="batch-download">
+            <h2>🚀 Batch Download All Cards</h2>
+            <p style="color: #666; margin-bottom: 20px;">
+                Download all credit card images at once for your website
+            </p>
+            <button class="batch-btn" onclick="downloadAllCards()">
+                📦 Download All Cards (ZIP)
+            </button>
+        </div>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script>
+        function downloadCard(cardId, fileName) {
+            const cardElement = document.getElementById(cardId);
+            
+            // Temporarily remove hover effects for screenshot
+            cardElement.style.transform = 'none';
+            cardElement.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+            
+            html2canvas(cardElement, {
+                backgroundColor: null,
+                scale: 3,
+                width: 420,
+                height: 264,
+                useCORS: true,
+                allowTaint: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = fileName + '-credit-card.png';
+                link.href = canvas.toDataURL('image/png', 1.0);
+                link.click();
+                
+                // Restore hover effects
+                cardElement.style.transform = '';
+                cardElement.style.boxShadow = '';
+            });
+        }
+
+        async function downloadAllCards() {
+            const zip = new JSZip();
+            const cards = [
+                { id: 'hdfc-regalia-card', name: 'hdfc-regalia-credit-card' },
+                { id: 'sbi-cashback-card', name: 'sbi-cashback-credit-card' },
+                { id: 'icici-amazon-card', name: 'icici-amazon-pay-credit-card' },
+                { id: 'axis-magnus-card', name: 'axis-magnus-credit-card' },
+                { id: 'flipkart-axis-card', name: 'flipkart-axis-credit-card' },
+                { id: 'hdfc-millennia-card', name: 'hdfc-millennia-credit-card' },
+                { id: 'axis-ace-card', name: 'axis-ace-credit-card' }
+            ];
+
+            for (let i = 0; i < cards.length; i++) {
+                const card = cards[i];
+                const cardElement = document.getElementById(card.id);
+                
+                // Temporarily remove hover effects
+                cardElement.style.transform = 'none';
+                cardElement.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+                
+                const canvas = await html2canvas(cardElement, {
+                    backgroundColor: null,
+                    scale: 3,
+                    width: 420,
+                    height: 264,
+                    useCORS: true,
+                    allowTaint: true
+                });
+                
+                const dataUrl = canvas.toDataURL('image/png', 1.0);
+                const base64Data = dataUrl.replace(/^data:image\/png;base64,/, '');
+                zip.file(card.name + '.png', base64Data, { base64: true });
+                
+                // Restore hover effects
+                cardElement.style.transform = '';
+                cardElement.style.boxShadow = '';
+            }
+
+            const content = await zip.generateAsync({ type: 'blob' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(content);
+            link.download = 'realistic-credit-cards.zip';
+            link.click();
+        }
+
+        // Add 3D hover effects
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 15;
+                const rotateY = (centerX - x) / 15;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+            });
+        });
+    </script>
+</body>
+</html>

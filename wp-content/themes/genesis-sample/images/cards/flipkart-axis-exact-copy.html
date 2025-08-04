@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipkart Axis Bank Credit Card - Exact Copy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .title {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        /* Reference Image Display */
+        .reference-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .reference-title {
+            font-size: 1.2em;
+            color: #444;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .reference-image {
+            max-width: 420px;
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+        }
+
+        .reference-note {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Flipkart Axis Bank Card - EXACT COPY */
+        .flipkart-axis-exact {
+            width: 420px;
+            height: 264px;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto 30px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            
+            /* EXACT Flipkart blue gradient from the image */
+            background: linear-gradient(135deg, 
+                #2874F0 0%,    /* Flipkart Primary Blue */
+                #1565C0 50%,   /* Medium Blue */
+                #0D47A1 100%   /* Deep Blue */
+            );
+        }
+
+        .flipkart-axis-exact:hover {
+            transform: scale(1.02);
+        }
+
+        /* Flipkart pattern overlay */
+        .flipkart-axis-exact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+        }
+
+        /* Card content - WHITE TEXT on BLUE */
+        .card-content-exact {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: #ffffff;
+        }
+
+        /* Top section - Flipkart logo and VISA */
+        .card-top-exact {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .flipkart-logo-exact {
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 18px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.3px;
+            border: 1px solid rgba(255,255,255,0.25);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+        }
+
+        .visa-logo-exact {
+            font-family: 'Arial Black', sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* Flipkart "f" logo in corner */
+        .flipkart-f-exact {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            width: 35px;
+            height: 35px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 22px;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .flipkart-f-exact::after {
+            content: 'f';
+        }
+
+        /* Chip - exact design */
+        .chip-exact {
+            width: 44px;
+            height: 35px;
+            background: 
+                linear-gradient(145deg, #FFD700 0%, #F1C232 50%, #E6AC00 100%);
+            border-radius: 6px;
+            margin-bottom: 22px;
+            position: relative;
+            box-shadow: 
+                inset 0 1px 3px rgba(255,255,255,0.4),
+                inset 0 -1px 3px rgba(0,0,0,0.2),
+                0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .chip-exact::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 20px;
+            background: repeating-linear-gradient(
+                90deg,
+                #B8860B 0px,
+                #B8860B 1px,
+                #DAA520 1px,
+                #DAA520 2px
+            );
+            border-radius: 2px;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,0.3);
+        }
+
+        /* Card number */
+        .card-number-exact {
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 18px;
+            letter-spacing: 3px;
+            margin-bottom: 22px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        /* Bottom section */
+        .card-bottom-exact {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .cardholder-section-exact {
+            font-size: 9px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        .cardholder-name-exact {
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+
+        .expiry-section-exact {
+            text-align: right;
+            font-size: 9px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        .expiry-date-exact {
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        /* Axis Bank branding */
+        .axis-branding {
+            position: absolute;
+            bottom: 20px;
+            left: 24px;
+            font-size: 10px;
+            opacity: 0.7;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Download section */
+        .download-section {
+            margin-top: 30px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #2874F0 0%, #1565C0 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(40,116,240,0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40,116,240,0.4);
+        }
+
+        .comparison-text {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Flipkart Axis Bank Credit Card</h1>
+        <p class="subtitle">Exact Copy of Original Image</p>
+        
+        <!-- Reference Image Section -->
+        <div class="reference-section">
+            <h3 class="reference-title">📸 Original Reference Image</h3>
+            <img src="https://cd9941cc.delivery.rocketcdn.me/wp-content/uploads/2021/08/Flipkart-Axis-Bank-Credit-Card.webp" alt="Flipkart Axis Bank Original Card" class="reference-image" crossorigin="anonymous">
+            <p class="reference-note">This is the exact image I'm copying in CSS below</p>
+        </div>
+        
+        <!-- Exact CSS Copy -->
+        <div class="flipkart-axis-exact" id="flipkart-axis-exact">
+            <div class="flipkart-f-exact"></div>
+            <div class="card-content-exact">
+                <div class="card-top-exact">
+                    <div class="flipkart-logo-exact">FLIPKART</div>
+                    <div class="visa-logo-exact">VISA</div>
+                </div>
+                
+                <div class="chip-exact"></div>
+                
+                <div class="card-number-exact">5239 1678 9012 3456</div>
+                
+                <div class="card-bottom-exact">
+                    <div>
+                        <div class="cardholder-section-exact">Card Member</div>
+                        <div class="cardholder-name-exact">FLIPKART AXIS</div>
+                    </div>
+                    <div>
+                        <div class="expiry-section-exact">Valid Thru</div>
+                        <div class="expiry-date-exact">12/28</div>
+                    </div>
+                </div>
+                
+                <div class="axis-branding">AXIS BANK</div>
+            </div>
+        </div>
+
+        <p class="comparison-text">👆 CSS Copy created to match the original image exactly</p>
+
+        <!-- Download Section -->
+        <div class="download-section">
+            <button class="download-btn" onclick="downloadExactCopy()">📥 Download Exact Copy PNG</button>
+        </div>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        function downloadExactCopy() {
+            const cardElement = document.getElementById('flipkart-axis-exact');
+            
+            // Store original state
+            const originalTransform = cardElement.style.transform;
+            cardElement.style.transform = 'none';
+            
+            html2canvas(cardElement, {
+                backgroundColor: null,
+                scale: 8, // Ultra high resolution
+                width: 420,
+                height: 264,
+                useCORS: true,
+                allowTaint: true,
+                logging: false,
+                pixelRatio: 1
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'flipkart-axis-bank-exact-copy.png';
+                link.href = canvas.toDataURL('image/png', 1.0);
+                link.click();
+                
+                // Restore original state
+                cardElement.style.transform = originalTransform;
+            });
+        }
+
+        // Subtle hover effect
+        const card = document.getElementById('flipkart-axis-exact');
+        
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+        });
+    </script>
+</body>
+</html>

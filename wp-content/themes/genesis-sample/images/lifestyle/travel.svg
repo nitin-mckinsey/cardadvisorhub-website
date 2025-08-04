@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="120" viewBox="0 0 300 120">
+  <defs>
+    <linearGradient id="travelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00BFFF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1E90FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0000CD;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Sky background -->
+  <rect width="300" height="120" fill="url(#travelGrad)"/>
+  
+  <!-- Clouds -->
+  <circle cx="50" cy="25" r="10" fill="white" fill-opacity="0.8"/>
+  <circle cx="60" cy="25" r="12" fill="white" fill-opacity="0.8"/>
+  <circle cx="70" cy="25" r="10" fill="white" fill-opacity="0.8"/>
+  
+  <circle cx="200" cy="20" r="8" fill="white" fill-opacity="0.7"/>
+  <circle cx="210" cy="20" r="10" fill="white" fill-opacity="0.7"/>
+  <circle cx="220" cy="20" r="8" fill="white" fill-opacity="0.7"/>
+  
+  <!-- Airplane -->
+  <ellipse cx="150" cy="60" rx="30" ry="8" fill="#C0C0C0"/>
+  <ellipse cx="140" cy="60" rx="8" ry="15" fill="#C0C0C0"/>
+  <polygon points="120,60 130,55 130,65" fill="#C0C0C0"/>
+  <polygon points="170,55 185,52 185,58 175,60" fill="#C0C0C0"/>
+  <polygon points="170,65 185,62 185,68 175,60" fill="#C0C0C0"/>
+  
+  <!-- Flight path -->
+  <path d="M50 80 Q100 70 150 60 Q200 50 250 40" stroke="white" stroke-width="2" fill="none" stroke-dasharray="5,5" opacity="0.7"/>
+  
+  <!-- Passport -->
+  <rect x="20" y="90" width="20" height="25" fill="#8B0000" rx="2"/>
+  <text x="30" y="102" font-family="Arial" font-size="6" font-weight="bold" fill="white" text-anchor="middle">PASS</text>
+  <text x="30" y="109" font-family="Arial" font-size="6" font-weight="bold" fill="white" text-anchor="middle">PORT</text>
+  
+  <!-- Luggage -->
+  <rect x="260" y="85" width="25" height="30" fill="#654321" rx="3"/>
+  <rect x="265" y="90" width="15" height="20" fill="#8B4513"/>
+  <circle cx="267" cy="112" r="3" fill="#2F4F4F"/>
+  <circle cx="283" cy="112" r="3" fill="#2F4F4F"/>
+</svg>

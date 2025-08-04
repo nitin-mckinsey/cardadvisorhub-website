@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBI Simply Save Card - Exact Replica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+        }
+
+        .title {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        /* SBI Simply Save Card - Exact Replica */
+        .sbi-simply-save-card {
+            width: 420px;
+            height: 264px;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto 30px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            
+            /* Exact SBI Simply Save gradient - Blue to Green */
+            background: linear-gradient(135deg, 
+                #1E88E5 0%,    /* SBI Blue */
+                #1976D2 25%,   /* Deeper Blue */
+                #43A047 70%,   /* SBI Green */
+                #388E3C 100%   /* Deep Green */
+            );
+        }
+
+        .sbi-simply-save-card:hover {
+            transform: scale(1.05);
+        }
+
+        /* Card pattern overlay */
+        .sbi-simply-save-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.03) 50%, transparent 70%);
+        }
+
+        /* Card content */
+        .card-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            padding: 24px 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: white;
+        }
+
+        /* Top section */
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .sbi-logo {
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 18px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.3px;
+            border: 1px solid rgba(255,255,255,0.25);
+            backdrop-filter: blur(10px);
+        }
+
+        .visa-logo {
+            font-family: 'Arial Black', sans-serif;
+            font-size: 22px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* SBI Simply Save specific styling */
+        .simply-save-badge {
+            position: absolute;
+            top: 22px;
+            right: 28px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 900;
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .simply-save-badge::after {
+            content: '💰';
+        }
+
+        /* Chip */
+        .chip {
+            width: 48px;
+            height: 38px;
+            background: 
+                linear-gradient(145deg, #FFD700 0%, #FFA500 100%),
+                linear-gradient(0deg, rgba(0,0,0,0.1) 0%, rgba(255,255,255,0.2) 100%);
+            border-radius: 8px;
+            margin: 20px 0;
+            position: relative;
+            box-shadow: 
+                inset 0 2px 6px rgba(255,255,255,0.4),
+                inset 0 -2px 6px rgba(0,0,0,0.2),
+                0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .chip::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 34px;
+            height: 24px;
+            background: repeating-linear-gradient(
+                90deg,
+                #B8860B 0px,
+                #B8860B 1px,
+                #FFD700 1px,
+                #FFD700 3px
+            );
+            border-radius: 3px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* Card number */
+        .card-number {
+            font-family: 'SF Mono', 'Monaco', 'Menlo', 'Courier New', monospace;
+            font-size: 20px;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            font-weight: 500;
+        }
+
+        /* Bottom section */
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .cardholder-section {
+            font-size: 10px;
+            opacity: 0.85;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .cardholder-name {
+            font-size: 14px;
+            font-weight: 700;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .expiry-section {
+            text-align: right;
+            font-size: 10px;
+            opacity: 0.85;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .expiry-date {
+            font-size: 14px;
+            font-weight: 700;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        /* Simply Save text styling */
+        .simply-save-text {
+            color: rgba(255,255,255,0.95);
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Download section */
+        .download-section {
+            margin-top: 30px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #43A047 0%, #388E3C 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(67,160,71,0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(67,160,71,0.4);
+        }
+
+        /* Card specifications */
+        .card-specs {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .spec-label {
+            opacity: 0.8;
+        }
+
+        .spec-value {
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">SBI Simply Save Credit Card</h1>
+        <p class="subtitle">Exact Replica of Original Design</p>
+        
+        <!-- SBI Simply Save Card -->
+        <div class="sbi-simply-save-card" id="sbi-simply-save">
+            <div class="simply-save-badge"></div>
+            <div class="card-content">
+                <div class="card-top">
+                    <div class="sbi-logo">SBI CARD</div>
+                    <div class="visa-logo">VISA</div>
+                </div>
+                
+                <div class="chip"></div>
+                
+                <div class="card-number">5239 1678 9012 3456</div>
+                
+                <div class="card-bottom">
+                    <div>
+                        <div class="cardholder-section">Card Member</div>
+                        <div class="cardholder-name simply-save-text">SIMPLY SAVE</div>
+                    </div>
+                    <div>
+                        <div class="expiry-section">Valid Thru</div>
+                        <div class="expiry-date">12/28</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Specifications -->
+        <div class="card-specs">
+            <div class="spec-item">
+                <span class="spec-label">Annual Fee:</span>
+                <span class="spec-value">₹499 (Waived on spending ₹1L)</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Reward Rate:</span>
+                <span class="spec-value">10X on dining, movies & groceries</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Fuel Surcharge:</span>
+                <span class="spec-value">1% waiver up to ₹100/month</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Best For:</span>
+                <span class="spec-value">Everyday spending & rewards</span>
+            </div>
+        </div>
+
+        <!-- Download Section -->
+        <div class="download-section">
+            <button class="download-btn" onclick="downloadCard()">📸 Download Exact PNG Replica</button>
+        </div>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        function downloadCard() {
+            const cardElement = document.getElementById('sbi-simply-save');
+            
+            // Store original state and ensure card is in perfect position
+            const originalTransform = cardElement.style.transform;
+            cardElement.style.transform = 'none';
+            
+            html2canvas(cardElement, {
+                backgroundColor: null,
+                scale: 6, // Super high resolution for pixel-perfect output
+                width: 420,
+                height: 264,
+                useCORS: true,
+                allowTaint: true,
+                logging: false
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'sbi-simply-save-exact-replica.png';
+                link.href = canvas.toDataURL('image/png', 1.0);
+                link.click();
+                
+                // Restore original state
+                cardElement.style.transform = originalTransform;
+            });
+        }
+
+        // Enhanced 3D hover effect
+        const card = document.getElementById('sbi-simply-save');
+        
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 12;
+            const rotateY = (centerX - x) / 12;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+        });
+    </script>
+</body>
+</html>

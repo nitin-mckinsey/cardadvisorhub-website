@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 264" style="font-family: Arial, sans-serif;">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="amazonBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#232f3e"/>
+      <stop offset="60%" style="stop-color:#232f3e"/>
+      <stop offset="100%" style="stop-color:#ff9900"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="420" height="264" rx="16" fill="url(#amazonBg)"/>
+  
+  <!-- Amazon Orange Accent -->
+  <polygon points="320,264 420,264 420,164" fill="#ff9900" opacity="0.8"/>
+  
+  <!-- ICICI Bank Logo Area -->
+  <rect x="24" y="24" width="110" height="28" rx="14" fill="rgba(255,153,0,0.2)" stroke="rgba(255,153,0,0.4)" stroke-width="1"/>
+  <text x="79" y="44" text-anchor="middle" fill="white" font-size="14" font-weight="bold" letter-spacing="1px">ICICI BANK</text>
+  
+  <!-- VISA Logo -->
+  <text x="372" y="44" text-anchor="middle" fill="white" font-size="18" font-weight="bold" opacity="0.9">VISA</text>
+  
+  <!-- Chip -->
+  <rect x="24" y="78" width="48" height="38" rx="6" fill="url(#chipGrad)" stroke="rgba(184,134,11,0.5)" stroke-width="1"/>
+  <defs>
+    <linearGradient id="chipGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd700"/>
+      <stop offset="100%" style="stop-color:#ffb347"/>
+    </linearGradient>
+  </defs>
+  <rect x="32" y="86" width="32" height="22" rx="2" fill="repeating-linear-gradient(90deg, #b8860b 0px, #b8860b 1px, #ffd700 1px, #ffd700 3px)"/>
+  
+  <!-- Card Number -->
+  <text x="24" y="158" fill="white" font-size="18" font-family="Courier New, monospace" letter-spacing="3px" opacity="0.95">5239 4567 8901 2345</text>
+  
+  <!-- Card Details -->
+  <text x="24" y="200" fill="rgba(255,255,255,0.7)" font-size="10" text-transform="uppercase">CARD MEMBER</text>
+  <text x="24" y="218" fill="#ff9900" font-size="14" font-weight="bold" text-transform="uppercase">AMAZON PAY</text>
+  
+  <text x="372" y="200" text-anchor="end" fill="rgba(255,255,255,0.7)" font-size="10">VALID THRU</text>
+  <text x="372" y="218" text-anchor="end" fill="white" font-size="14" font-weight="bold">03/29</text>
+  
+  <!-- Amazon Arrow Smile -->
+  <path d="M 300 120 Q 340 130 380 120" stroke="#ff9900" stroke-width="3" fill="none" opacity="0.4"/>
+  <circle cx="380" cy="120" r="2" fill="#ff9900" opacity="0.6"/>
+</svg>

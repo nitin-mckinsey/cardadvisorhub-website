@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="120" viewBox="0 0 300 120">
+  <defs>
+    <linearGradient id="hotelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4169E1;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#6495ED;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#87CEEB;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="120" fill="url(#hotelGrad)"/>
+  
+  <!-- Hotel building -->
+  <rect x="30" y="20" width="240" height="80" fill="#F5DEB3" rx="5"/>
+  
+  <!-- Hotel floors -->
+  <rect x="40" y="30" width="220" height="15" fill="#DEB887"/>
+  <rect x="40" y="50" width="220" height="15" fill="#DEB887"/>
+  <rect x="40" y="70" width="220" height="15" fill="#DEB887"/>
+  
+  <!-- Hotel entrance -->
+  <rect x="130" y="85" width="40" height="15" fill="#8B4513" rx="2"/>
+  
+  <!-- Windows pattern -->
+  <rect x="60" y="32" width="8" height="8" fill="#87CEEB" rx="1"/>
+  <rect x="80" y="32" width="8" height="8" fill="#87CEEB" rx="1"/>
+  <rect x="100" y="32" width="8" height="8" fill="#87CEEB" rx="1"/>
+  <rect x="120" y="32" width="8" height="8" fill="#87CEEB" rx="1"/>
+  <rect x="180" y="32" width="8" height="8" fill="#87CEEB" rx="1"/>
+  <rect x="200" y="32" width="8" height="8" fill="#87CEEB" rx="1"/>
+  <rect x="220" y="32" width="8" height="8" fill="#87CEEB" rx="1"/>
+  <rect x="240" y="32" width="8" height="8" fill="#87CEEB" rx="1"/>
+  
+  <!-- Hotel sign -->
+  <rect x="110" y="8" width="80" height="12" fill="#800020" rx="2"/>
+  <text x="150" y="16" font-family="Arial" font-size="8" font-weight="bold" fill="white" text-anchor="middle">LUXURY HOTEL</text>
+  
+  <!-- Stars -->
+  <circle cx="270" cy="25" r="3" fill="#FFD700"/>
+  <circle cx="280" cy="35" r="2" fill="#FFD700"/>
+  <circle cx="260" cy="40" r="2" fill="#FFD700"/>
+</svg>
