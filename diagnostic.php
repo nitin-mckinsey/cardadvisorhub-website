@@ -1,145 +1,181 @@
 <?php
-// 500 Error Diagnostic Script
-// This file helps identify the exact cause of 500 errors
+/**
+ * WordPress Installation Diagnostic Tool
+ * Helps identify what's missing for WordPress to work
+ */
 
-// Enable error reporting
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('log_errors', 1);
-
-// Set content type
-header('Content-Type: text/html; charset=UTF-8');
-
-echo "<h1>🔍 500 Error Diagnostic Report</h1>";
-echo "<p>Generated: " . date('Y-m-d H:i:s') . "</p>";
-echo "<hr>";
-
-// Test 1: PHP Basic Functionality
-echo "<h2>✅ Test 1: PHP Basic Functionality</h2>";
-echo "<p>PHP Version: " . PHP_VERSION . "</p>";
-echo "<p>Server Software: " . $_SERVER['SERVER_SOFTWARE'] . "</p>";
-echo "<p>Document Root: " . $_SERVER['DOCUMENT_ROOT'] . "</p>";
-echo "<p>Script Name: " . $_SERVER['SCRIPT_NAME'] . "</p>";
-
-// Test 2: File System Check
-echo "<h2>📁 Test 2: File System Check</h2>";
-$files_to_check = [
-    'wp-config.php' => 'WordPress Configuration',
-    'wp-load.php' => 'WordPress Core Loader',
-    'wp-blog-header.php' => 'WordPress Blog Header',
-    '.htaccess' => 'URL Rewrite Rules',
-    'wp-content/themes/genesis-sample/functions.php' => 'Theme Functions',
-    'wp-content/themes/genesis-sample/page-compare-cards.php' => 'Compare Cards Page'
-];
-
-foreach ($files_to_check as $file => $description) {
-    $full_path = $_SERVER['DOCUMENT_ROOT'] . '/' . $file;
-    if (file_exists($full_path)) {
-        $size = filesize($full_path);
-        $perms = substr(sprintf('%o', fileperms($full_path)), -4);
-        echo "<p>✅ <strong>$description</strong>: Found ($size bytes, perms: $perms)</p>";
-    } else {
-        echo "<p>❌ <strong>$description</strong>: Missing</p>";
-    }
+// Prevent direct access in production
+if (isset($_GET['action']) && $_GET['action'] === 'install-wp') {
+    installWordPress();
+    exit;
 }
 
-// Test 3: WordPress Detection
-echo "<h2>🎯 Test 3: WordPress Detection</h2>";
-if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/wp-config.php')) {
-    echo "<p>✅ wp-config.php found</p>";
+function installWordPress() {
+    echo "<h2>Installing WordPress Core...</h2>";
     
-    // Try to load WordPress constants
-    try {
-        define('ABSPATH', $_SERVER['DOCUMENT_ROOT'] . '/');
-        if (file_exists(ABSPATH . 'wp-config.php')) {
-            // Don't actually include wp-config to avoid database connection
-            echo "<p>✅ wp-config.php is readable</p>";
+    // Download WordPress
+    $wpZip = 'https://wordpress.org/latest.zip';
+    $tempFile = sys_get_temp_dir() . '/wordpress.zip';
+    
+    echo "<p>Downloading WordPress...</p>";
+    if (function_exists('curl_init')) {
+        $ch = curl_init($wpZip);
+        $fp = fopen($tempFile, 'w+');
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_exec($ch);
+        curl_close($ch);
+        fclose($fp);
+    } else {
+        file_put_contents($tempFile, file_get_contents($wpZip));
+    }
+    
+    // Extract WordPress
+    if (class_exists('ZipArchive')) {
+        $zip = new ZipArchive;
+        if ($zip->open($tempFile) === TRUE) {
+            $zip->extractTo(__DIR__ . '/temp-wp/');
+            $zip->close();
+            
+            // Move files from wordpress subdirectory to root
+            $wpDir = __DIR__ . '/temp-wp/wordpress/';
+            if (is_dir($wpDir)) {
+                $files = scandir($wpDir);
+                foreach ($files as $file) {
+                    if ($file != '.' && $file != '..') {
+                        rename($wpDir . $file, __DIR__ . '/' . $file);
+                    }
+                }
+                // Clean up
+                rmdir($wpDir);
+                rmdir(__DIR__ . '/temp-wp/');
+            }
+            
+            echo "<p style='color: green;'>✅ WordPress installed successfully!</p>";
+            echo "<p><a href='/'>Go to your website</a></p>";
+        } else {
+            echo "<p style='color: red;'>❌ Failed to extract WordPress</p>";
         }
-    } catch (Exception $e) {
-        echo "<p>❌ Error reading wp-config.php: " . $e->getMessage() . "</p>";
-    }
-} else {
-    echo "<p>❌ wp-config.php not found</p>";
-}
-
-// Test 4: Directory Permissions
-echo "<h2>🔒 Test 4: Directory Permissions</h2>";
-$dirs_to_check = [
-    '.' => 'Root Directory',
-    'wp-content' => 'WP Content',
-    'wp-content/themes' => 'Themes Directory',
-    'wp-content/themes/genesis-sample' => 'Theme Directory'
-];
-
-foreach ($dirs_to_check as $dir => $description) {
-    $full_path = $_SERVER['DOCUMENT_ROOT'] . '/' . $dir;
-    if (is_dir($full_path)) {
-        $perms = substr(sprintf('%o', fileperms($full_path)), -4);
-        $writable = is_writable($full_path) ? 'Writable' : 'Not Writable';
-        echo "<p>✅ <strong>$description</strong>: Exists (perms: $perms, $writable)</p>";
     } else {
-        echo "<p>❌ <strong>$description</strong>: Missing</p>";
+        echo "<p style='color: red;'>❌ ZipArchive not available</p>";
     }
-}
-
-// Test 5: PHP Extensions
-echo "<h2>🔧 Test 5: PHP Extensions</h2>";
-$required_extensions = ['mysqli', 'curl', 'gd', 'mbstring', 'zip', 'openssl'];
-foreach ($required_extensions as $ext) {
-    if (extension_loaded($ext)) {
-        echo "<p>✅ $ext: Loaded</p>";
-    } else {
-        echo "<p>❌ $ext: Not loaded</p>";
-    }
-}
-
-// Test 6: Memory and Limits
-echo "<h2>💾 Test 6: PHP Configuration</h2>";
-echo "<p>Memory Limit: " . ini_get('memory_limit') . "</p>";
-echo "<p>Max Execution Time: " . ini_get('max_execution_time') . "s</p>";
-echo "<p>Upload Max Filesize: " . ini_get('upload_max_filesize') . "</p>";
-echo "<p>Post Max Size: " . ini_get('post_max_size') . "</p>";
-
-// Test 7: Error Log Check
-echo "<h2>📋 Test 7: Error Information</h2>";
-echo "<p>Error Log Location: " . ini_get('error_log') . "</p>";
-echo "<p>Display Errors: " . (ini_get('display_errors') ? 'On' : 'Off') . "</p>";
-echo "<p>Log Errors: " . (ini_get('log_errors') ? 'On' : 'Off') . "</p>";
-
-// Test 8: Theme File Content Check
-echo "<h2>🎨 Test 8: Theme File Check</h2>";
-$theme_functions = $_SERVER['DOCUMENT_ROOT'] . '/wp-content/themes/genesis-sample/functions.php';
-if (file_exists($theme_functions)) {
-    $content = file_get_contents($theme_functions);
-    $lines = count(explode("\n", $content));
-    echo "<p>✅ functions.php: $lines lines</p>";
     
-    // Check for problematic code
-    if (strpos($content, 'genesis_') !== false) {
-        echo "<p>⚠️ Genesis framework calls detected (may cause issues without Genesis)</p>";
-    }
-    if (strpos($content, 'syntax error') !== false || strpos($content, 'parse error') !== false) {
-        echo "<p>❌ Potential syntax errors detected</p>";
-    }
-} else {
-    echo "<p>❌ Theme functions.php not found</p>";
+    unlink($tempFile);
 }
 
-echo "<hr>";
-echo "<h2>🎯 Diagnosis Summary</h2>";
-
-// Provide recommendations
-if (!file_exists($_SERVER['DOCUMENT_ROOT'] . '/wp-load.php')) {
-    echo "<p><strong>🚨 PRIMARY ISSUE: WordPress Core Missing</strong></p>";
-    echo "<p>Solution: Install WordPress core files</p>";
-} elseif (!file_exists($_SERVER['DOCUMENT_ROOT'] . '/wp-config.php')) {
-    echo "<p><strong>🚨 PRIMARY ISSUE: WordPress Not Configured</strong></p>";
-    echo "<p>Solution: Configure wp-config.php with database settings</p>";
-} else {
-    echo "<p><strong>🔍 INVESTIGATION NEEDED: Advanced WordPress Issue</strong></p>";
-    echo "<p>WordPress core appears present. Check error logs for specific PHP errors.</p>";
-}
-
-echo "<hr>";
-echo "<p><small>Diagnostic completed at " . date('Y-m-d H:i:s') . "</small></p>";
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WordPress Diagnostic - Card Advisor Hub</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f1f1f1; }
+        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .status { padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .ok { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; }
+        .install-btn { background: #007cba; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        .install-btn:hover { background: #005a87; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏦 Card Advisor Hub - WordPress Diagnostic</h1>
+        
+        <h2>Server Information</h2>
+        <div class="status ok">
+            <strong>PHP Version:</strong> <?php echo phpversion(); ?><br>
+            <strong>Server:</strong> <?php echo $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown'; ?><br>
+            <strong>Document Root:</strong> <?php echo $_SERVER['DOCUMENT_ROOT']; ?><br>
+            <strong>Current Directory:</strong> <?php echo __DIR__; ?>
+        </div>
+        
+        <h2>WordPress Core Files Check</h2>
+        <?php
+        $wpCoreFiles = [
+            'wp-blog-header.php' => 'Main WordPress loader',
+            'wp-load.php' => 'WordPress bootstrap',
+            'wp-config.php' => 'WordPress configuration',
+            'wp-settings.php' => 'WordPress settings',
+            'wp-admin/index.php' => 'WordPress admin',
+            'wp-includes/version.php' => 'WordPress core functions',
+        ];
+        
+        $missingFiles = [];
+        foreach ($wpCoreFiles as $file => $description) {
+            if (file_exists(__DIR__ . '/' . $file)) {
+                echo "<div class='status ok'>✅ <strong>$file</strong> - $description</div>";
+            } else {
+                echo "<div class='status error'>❌ <strong>$file</strong> - $description (MISSING)</div>";
+                $missingFiles[] = $file;
+            }
+        }
+        ?>
+        
+        <h2>Theme Files Check</h2>
+        <?php
+        $themeFiles = [
+            'wp-content/themes/genesis-sample/page-compare-cards.php' => 'Credit card comparison page',
+            'wp-content/themes/genesis-sample/functions.php' => 'Theme functions',
+            'wp-content/themes/genesis-sample/style.css' => 'Theme styles',
+        ];
+        
+        foreach ($themeFiles as $file => $description) {
+            if (file_exists(__DIR__ . '/' . $file)) {
+                echo "<div class='status ok'>✅ <strong>$file</strong> - $description</div>";
+            } else {
+                echo "<div class='status warning'>⚠️ <strong>$file</strong> - $description (Missing but theme deployed)</div>";
+            }
+        }
+        ?>
+        
+        <h2>Directory Listing</h2>
+        <div class="status">
+            <strong>Files in current directory:</strong><br>
+            <?php
+            $files = scandir(__DIR__);
+            foreach ($files as $file) {
+                if ($file != '.' && $file != '..') {
+                    $type = is_dir(__DIR__ . '/' . $file) ? '[DIR]' : '[FILE]';
+                    echo "$type $file<br>";
+                }
+            }
+            ?>
+        </div>
+        
+        <?php if (!empty($missingFiles)): ?>
+        <h2>WordPress Installation</h2>
+        <div class="status error">
+            <strong>WordPress core files are missing!</strong><br>
+            This is why you're getting 500 errors. WordPress needs to be installed.
+        </div>
+        
+        <p>
+            <button class="install-btn" onclick="if(confirm('Install WordPress? This will download and install WordPress core files.')) { window.location.href='?action=install-wp'; }">
+                Install WordPress Core Files
+            </button>
+        </p>
+        <?php else: ?>
+        <div class="status ok">
+            <strong>✅ WordPress core files are present!</strong><br>
+            The 500 error might be due to configuration issues.
+        </div>
+        <?php endif; ?>
+        
+        <h2>Next Steps</h2>
+        <div class="status">
+            1. If WordPress core is missing, click "Install WordPress Core Files" above<br>
+            2. Create/configure wp-config.php with database settings<br>
+            3. Set proper file permissions (755 for directories, 644 for files)<br>
+            4. Test your credit card comparison tool: <a href="/compare-cards/">Compare Cards</a><br>
+            5. Access WordPress admin: <a href="/wp-admin/">/wp-admin/</a>
+        </div>
+        
+        <p style="color: #666; font-size: 12px; margin-top: 30px;">
+            Diagnostic run at: <?php echo date('Y-m-d H:i:s'); ?> | 
+            <a href="/">Back to site</a>
+        </p>
+    </div>
+</body>
+</html>
