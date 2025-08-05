@@ -1511,7 +1511,7 @@ body {
                                     ));
                                 }
                                 $card_image = '';
-                                $theme_dir = get_template_directory_uri() . '/images/cards/';
+                                $theme_dir = home_url('/wp-content/themes/genesis-sample/images/cards/');
                                 $uploads_dir = home_url('/wp-content/uploads/card-images/');
                                 $found = false;
                                 if ($card_id === 'hdfc-regalia') {
