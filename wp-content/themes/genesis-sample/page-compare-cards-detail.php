@@ -1493,15 +1493,15 @@ body {
                                 $img_exts = array('.webp', '.jpg', '.png', '.jpeg', '.JPG', '.PNG', '.WEBP');
                                 $img_candidates = array();
                                 foreach ($img_exts as $ext) {
-                                    $img_candidates[] = $card_id . $ext;
-                                    $img_candidates[] = strtolower($card_id) . $ext;
-                                    $img_candidates[] = strtoupper($card_id) . $ext;
-                                    $img_candidates[] = ucfirst($card_id) . $ext;
-                                    // Special case for icici-amazon-pay: also try icici-amazon-pay.jpg and icici-amazon-pay.png
+                                    // Special case for icici-amazon-pay: prioritize icici-amazon-pay.jpg and icici-amazon-pay.png
                                     if ($card_id === 'icici-amazon-pay') {
                                         $img_candidates[] = 'icici-amazon-pay.jpg';
                                         $img_candidates[] = 'icici-amazon-pay.png';
                                     }
+                                    $img_candidates[] = $card_id . $ext;
+                                    $img_candidates[] = strtolower($card_id) . $ext;
+                                    $img_candidates[] = strtoupper($card_id) . $ext;
+                                    $img_candidates[] = ucfirst($card_id) . $ext;
                                 }
                                 if ($card_id === 'hdfc-regalia') {
                                     $img_candidates = array_merge($img_candidates, array(
@@ -1553,7 +1553,7 @@ body {
                                 // Special case: icici-amazon-pay card page URL
                                 $card_page_url_final = $card_page_url;
                                 if ($card_id === 'icici-amazon-pay') {
-                                    $card_page_url_final = home_url('/icici-amazon-pay-credit-card/');
+                                    $card_page_url_final = home_url('/wp-content/themes/genesis-sample/page-icici-amazon.php');
                                 }
                                 ?>
                                 <a href="<?php echo esc_url($card_page_url_final); ?>" class="card-link">
