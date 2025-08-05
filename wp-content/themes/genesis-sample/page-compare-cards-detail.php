@@ -1300,12 +1300,28 @@ body {
                         <th style="width: 200px;">Comparison</th>
                         <?php foreach ($compare_cards as $card_id): 
                             if (isset($card_database[$card_id])):
-                                $card = $card_database[$card_id]; ?>
-                                <th>
-                                    <div class="card-name"><?php echo esc_html($card['name']); ?></div>
-                                    <div class="card-bank"><?php echo esc_html($card['bank']); ?></div>
-                                    <div class="rating">
-                                        <span>★★★★☆</span> <?php echo esc_html($card['rating']); ?>
+                                $card = $card_database[$card_id]; 
+                                $card_image = home_url("/wp-content/uploads/card-images/{$card_id}.jpg");
+                                $card_page_url = home_url("/credit-cards/{$card_id}/");
+                                ?>
+                                <th style="text-align: center; padding: 15px;">
+                                    <div class="card-image-container">
+                                        <a href="<?php echo esc_url($card_page_url); ?>" class="card-link">
+                                            <img src="<?php echo esc_url($card_image); ?>" 
+                                                 alt="<?php echo esc_attr($card['name']); ?>" 
+                                                 class="card-image"
+                                                 style="width: 160px; height: 100px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin-bottom: 10px;"
+                                                 onerror="this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>'">
+                                        </a>
+                                    </div>
+                                    <div class="card-info" style="color: #fff;">
+                                        <a href="<?php echo esc_url($card_page_url); ?>" class="card-link" style="color: #fff; text-decoration: none;">
+                                            <div class="card-name" style="font-weight: bold; font-size: 14px; margin-bottom: 5px;"><?php echo esc_html($card['name']); ?></div>
+                                        </a>
+                                        <div class="card-bank" style="font-size: 12px; opacity: 0.9; margin-bottom: 5px;"><?php echo esc_html($card['bank']); ?></div>
+                                        <div class="rating" style="font-size: 12px;">
+                                            <span style="color: #ffc107;">★★★★☆</span> <?php echo esc_html($card['rating']); ?>
+                                        </div>
                                     </div>
                                 </th>
                             <?php endif;

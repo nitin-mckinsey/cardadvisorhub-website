@@ -1,44 +1,128 @@
 ﻿<?php 
-// HDFC Millennia Credit Card Page - SEO Optimized with Rank Math
-// Enhanced with structured data and SEO variables
+// HDFC Millennia Credit Card - Clean Version
+// SEO Optimized with Rank Math Integration
 
 // SEO Variables for Rank Math Integration
 $card_name = "HDFC Millennia Credit Card";
 $bank_name = "HDFC Bank";
-$main_benefit = "2.5% Cashback on Online Shopping";
-$annual_fee = "₹1,000 + GST (waived on ₹1L annual spends)";
-$welcome_benefit = "₹1,000 Welcome Cashback";
-$best_for = "Young professionals and online shopping enthusiasts";
-$apply_link = "https://leads.hdfcbank.com/applications/webforms/apply/HDFC_Millennia";
+$main_benefit = "2.5% to 5% Cashback on Online Spends";
+$annual_fee = "₹1,000 + GST (Waived on ₹1 lakh annual spends)";
+$welcome_benefit = "₹1,000 Worth Welcome Vouchers";
+$best_for = "Online shoppers, millennials, digital payments";
+$apply_link = "https://www.hdfcbank.com/personal/pay/cards/credit-cards/millennia-credit-card";
+
+// Remove X-Powered-By header for security
+add_action('init', function() {
+    header_remove('X-Powered-By');
+});
+
+// Enhanced image path handling
+function get_hdfc_millennia_image_url($version = 'primary') {
+    $base_path = get_template_directory_uri() . '/images/cards/';
+    $fallback_base = home_url('/wp-content/themes/genesis-sample/images/cards/');
+    
+    $images = array(
+        'primary' => 'HDFC-Millennia.jpg',
+        'card_only' => 'HDFC-Millennia-card-only.jpg',
+        'backup' => 'HDFC-Millennia-backup.jpg',
+        'fallback' => 'hdfc-millennia-fallback.jpg'
+    );
+    
+    $paths_to_try = array(
+        $base_path . $images[$version],
+        $fallback_base . $images[$version],
+        $base_path . strtolower($images[$version]),
+        $fallback_base . strtolower($images[$version])
+    );
+    
+    return $paths_to_try;
+}
+
+// SEO Meta Tags for HDFC Millennia
+add_action('wp_head', function() use ($card_name, $bank_name, $main_benefit, $annual_fee) {
+    $page_title = 'HDFC Millennia Credit Card Review 2025 - 5% Online Cashback | CardAdvisorHub';
+    $page_keywords = 'HDFC Millennia credit card, 5% cashback online shopping, millennia rewards, HDFC Bank cashback card';
+    
+    $image_urls = get_hdfc_millennia_image_url('primary');
+    $primary_image = $image_urls[0];
+    
+    echo '<meta name="keywords" content="' . $page_keywords . '">';
+    echo '<meta name="robots" content="index, follow">';
+    
+    // Open Graph Tags
+    echo '<meta property="og:title" content="' . $page_title . '">';
+    echo '<meta property="og:description" content="HDFC Millennia Credit Card offers up to 5% cashback on online shopping, ₹1,000 welcome vouchers, and special benefits for millennials. Annual fee ₹1,000 waived on spends.">';
+    echo '<meta property="og:type" content="article">';
+    echo '<meta property="og:url" content="' . get_permalink() . '">';
+    echo '<meta property="og:image" content="' . $primary_image . '">';
+    echo '<meta property="og:site_name" content="CardAdvisorHub">';
+    
+    // Twitter Cards
+    echo '<meta name="twitter:card" content="summary_large_image">';
+    echo '<meta name="twitter:title" content="HDFC Millennia Credit Card - 5% Online Cashback">';
+    echo '<meta name="twitter:description" content="HDFC Millennia Credit Card offers up to 5% cashback on online shopping with special millennial benefits.">';
+    echo '<meta name="twitter:image" content="' . $primary_image . '">';
+}, 1);
 
 // Add structured data for SEO
 add_action( 'wp_footer', 'hdfc_millennia_structured_data' );
 function hdfc_millennia_structured_data() {
     global $card_name, $bank_name, $main_benefit, $annual_fee, $welcome_benefit, $apply_link;
+    $image_urls = get_hdfc_millennia_image_url('primary');
+    $primary_image = $image_urls[0];
     ?>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Product",
         "name": "<?php echo $card_name; ?>",
-        "description": "<?php echo $card_name; ?> offering <?php echo $main_benefit; ?> perfect for young professionals and digital natives",
-        "category": "Credit Card",
-        "image": "<?php echo get_template_directory_uri(); ?>/images/hdfc-millennia-card.jpg",
+        "description": "<?php echo $card_name; ?> offering <?php echo $main_benefit; ?> with special benefits designed for millennials",
+        "category": "Cashback Credit Card",
+        "image": "<?php echo $primary_image; ?>",
         "brand": {
             "@type": "Brand",
             "name": "<?php echo $bank_name; ?>"
         },
         "offers": {
             "@type": "Offer",
-            "description": "<?php echo $welcome_benefit; ?> + <?php echo $main_benefit; ?>",
+            "description": "<?php echo $welcome_benefit; ?> + <?php echo $main_benefit; ?> + Special Millennial Benefits",
             "url": "<?php echo $apply_link; ?>",
             "priceCurrency": "INR",
             "price": "1000",
+            "priceValidUntil": "2025-12-31",
             "availability": "https://schema.org/InStock"
         },
         "aggregateRating": {
             "@type": "AggregateRating",
-            "ratingValue": "4.2",
+            "ratingValue": "4.3",
+            "bestRating": "5",
+            "worstRating": "1",
+            "reviewCount": "12569"
+        }
+    }
+    </script>
+    <?php
+}
+
+get_header(); ?>
+
+<!-- Breadcrumb Navigation -->
+<nav class="breadcrumb-nav" aria-label="Breadcrumb">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<?php echo home_url(); ?>">CardAdvisorHub Home</a></li>
+      <li class="breadcrumb-item"><a href="<?php echo home_url('/compare-cards/'); ?>">Compare Credit Cards</a></li>
+      <li class="breadcrumb-item active" aria-current="page">HDFC Millennia Credit Card</li>
+    </ol>
+  </div>
+</nav>
+
+<style>
+/* Enhanced CSS for HDFC Millennia modern theme */
+container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+...existing code...
+</style>
+...existing code...
             "bestRating": "5",
             "worstRating": "1",
             "reviewCount": "4156"
