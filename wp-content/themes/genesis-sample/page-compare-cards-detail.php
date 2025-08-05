@@ -26,7 +26,10 @@ $card_database = [
         'name' => 'HDFC Bank Regalia',
         'bank' => 'HDFC Bank',
         'annual_fee' => '₹2,500',
-        'joining_fee' => '₹2,500', 
+        'joining_fee' => '₹2,500',
+        'description' => 'Premium travel and dining card',
+        'cibil_score' => '750+',
+        'international_usage' => 'Yes',
         'min_income' => '₹60,000/month',
         'rating' => '4.2',
         'welcome_bonus' => '₹2,500 vouchers',
@@ -1293,22 +1296,35 @@ body {
     <div class="container">
         <a href="<?php echo home_url('/compare-cards/'); ?>" class="back-button">← Back to Card Selection</a>
         
-        <div class="comparison-wrapper">
-            <table class="comparison-table">
+        <div class="comparison-wrapper" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+            <table class="comparison-table" style="min-width: 700px;">
                 <thead>
                     <tr class="card-header">
                         <th style="width: 200px;">Comparison</th>
                         <?php foreach ($compare_cards as $card_id): 
             if (isset($card_database[$card_id])):
                 $card = $card_database[$card_id]; 
+                $img_exts = array('.webp', '.jpg', '.png', '.jpeg', '.JPG', '.PNG', '.WEBP');
                 $img_base = ABSPATH . 'wp-content/uploads/card-images/' . $card_id;
                 $img_url_base = home_url('/wp-content/uploads/card-images/' . $card_id);
-                $img_exts = array('.webp', '.jpg', '.png');
                 $card_image = '';
                 foreach ($img_exts as $ext) {
                     if (file_exists($img_base . $ext)) {
                         $card_image = $img_url_base . $ext;
                         break;
+                    }
+                }
+                // Try fallback with str_replace for case/variant issues
+                if (!$card_image) {
+                    $variants = array(strtolower($card_id), strtoupper($card_id), ucfirst($card_id));
+                    foreach ($variants as $variant) {
+                        foreach ($img_exts as $ext) {
+                            $try = ABSPATH . 'wp-content/uploads/card-images/' . $variant . $ext;
+                            if (file_exists($try)) {
+                                $card_image = home_url('/wp-content/uploads/card-images/' . $variant . $ext);
+                                break 2;
+                            }
+                        }
                     }
                 }
                 if (!$card_image) {
@@ -1341,94 +1357,60 @@ body {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><strong>Annual Fee</strong></td>
-                        <?php foreach ($compare_cards as $card_id): 
-                            if (isset($card_database[$card_id])):
-                                $card = $card_database[$card_id]; ?>
-                                <td><?php echo esc_html($card['annual_fee']); ?></td>
-                            <?php endif;
-                        endforeach; ?>
+                    <tr><td><strong>Description</strong></td>
+                        <?php foreach ($compare_cards as $card_id): if (isset($card_database[$card_id])): $card = $card_database[$card_id]; ?>
+                        <td><?php echo esc_html($card['description'] ?? '-'); ?></td>
+                        <?php endif; endforeach; ?>
                     </tr>
-                    
-                    <tr>
-                        <td><strong>Joining Fee</strong></td>
-                        <?php foreach ($compare_cards as $card_id): 
-                            if (isset($card_database[$card_id])):
-                                $card = $card_database[$card_id]; ?>
-                                <td><?php echo esc_html($card['joining_fee']); ?></td>
-                            <?php endif;
-                        endforeach; ?>
+                    <tr><td><strong>Annual Fee</strong></td>
+                        <?php foreach ($compare_cards as $card_id): if (isset($card_database[$card_id])): $card = $card_database[$card_id]; ?>
+                        <td><?php echo esc_html($card['annual_fee'] ?? '-'); ?></td>
+                        <?php endif; endforeach; ?>
                     </tr>
-                    
-                    <tr>
-                        <td><strong>Welcome Bonus</strong></td>
-                        <?php foreach ($compare_cards as $card_id): 
-                            if (isset($card_database[$card_id])):
-                                $card = $card_database[$card_id]; ?>
-                                <td><?php echo esc_html($card['welcome_bonus']); ?></td>
-                            <?php endif;
-                        endforeach; ?>
+                    <tr><td><strong>Joining Fee</strong></td>
+                        <?php foreach ($compare_cards as $card_id): if (isset($card_database[$card_id])): $card = $card_database[$card_id]; ?>
+                        <td><?php echo esc_html($card['joining_fee'] ?? '-'); ?></td>
+                        <?php endif; endforeach; ?>
                     </tr>
-                    
-                    <tr>
-                        <td><strong>Reward Structure</strong></td>
-                        <?php foreach ($compare_cards as $card_id): 
-                            if (isset($card_database[$card_id])):
-                                $card = $card_database[$card_id]; ?>
-                                <td><?php echo esc_html($card['rewards']); ?></td>
-                            <?php endif;
-                        endforeach; ?>
+                    <tr><td><strong>Minimum CIBIL Score</strong></td>
+                        <?php foreach ($compare_cards as $card_id): if (isset($card_database[$card_id])): $card = $card_database[$card_id]; ?>
+                        <td><?php echo esc_html($card['cibil_score'] ?? '-'); ?></td>
+                        <?php endif; endforeach; ?>
                     </tr>
-                    
-                    <tr>
-                        <td><strong>Key Benefits</strong></td>
-                        <?php foreach ($compare_cards as $card_id): 
-                            if (isset($card_database[$card_id])):
-                                $card = $card_database[$card_id]; ?>
-                                <td>
-                                    <ul class="benefits-list">
-                                        <?php foreach ($card['benefits'] as $benefit): ?>
-                                            <li><?php echo esc_html($benefit); ?></li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </td>
-                            <?php endif;
-                        endforeach; ?>
+                    <tr><td><strong>International Usage</strong></td>
+                        <?php foreach ($compare_cards as $card_id): if (isset($card_database[$card_id])): $card = $card_database[$card_id]; ?>
+                        <td><?php echo esc_html($card['international_usage'] ?? '-'); ?></td>
+                        <?php endif; endforeach; ?>
                     </tr>
-                    
-                    <tr>
-                        <td><strong>Best For</strong></td>
-                        <?php foreach ($compare_cards as $card_id): 
-                            if (isset($card_database[$card_id])):
-                                $card = $card_database[$card_id]; ?>
-                                <td><?php echo esc_html($card['best_for']); ?></td>
-                            <?php endif;
-                        endforeach; ?>
+                    <tr><td><strong>Welcome Bonus</strong></td>
+                        <?php foreach ($compare_cards as $card_id): if (isset($card_database[$card_id])): $card = $card_database[$card_id]; ?>
+                        <td><?php echo esc_html($card['welcome_bonus'] ?? '-'); ?></td>
+                        <?php endif; endforeach; ?>
                     </tr>
-                    
-                    <tr>
-                        <td><strong>Minimum Income</strong></td>
-                        <?php foreach ($compare_cards as $card_id): 
-                            if (isset($card_database[$card_id])):
-                                $card = $card_database[$card_id]; ?>
-                                <td><?php echo esc_html($card['min_income']); ?></td>
-                            <?php endif;
-                        endforeach; ?>
+                    <tr><td><strong>Reward Structure</strong></td>
+                        <?php foreach ($compare_cards as $card_id): if (isset($card_database[$card_id])): $card = $card_database[$card_id]; ?>
+                        <td><?php echo esc_html($card['rewards'] ?? '-'); ?></td>
+                        <?php endif; endforeach; ?>
                     </tr>
-                    
-                    <tr class="apply-row">
-                        <td><strong>Apply Now</strong></td>
-                        <?php foreach ($compare_cards as $card_id): 
-                            if (isset($card_database[$card_id])):
-                                $card = $card_database[$card_id]; ?>
-                                <td>
-                                    <a href="<?php echo esc_url($card['apply_link']); ?>" target="_blank" class="apply-btn">
-                                        Apply Online
-                                    </a>
-                                </td>
-                            <?php endif;
-                        endforeach; ?>
+                    <tr><td><strong>Key Benefits</strong></td>
+                        <?php foreach ($compare_cards as $card_id): if (isset($card_database[$card_id])): $card = $card_database[$card_id]; ?>
+                        <td><ul class="benefits-list"><?php foreach ($card['benefits'] as $benefit): ?><li><?php echo esc_html($benefit); ?></li><?php endforeach; ?></ul></td>
+                        <?php endif; endforeach; ?>
+                    </tr>
+                    <tr><td><strong>Best For</strong></td>
+                        <?php foreach ($compare_cards as $card_id): if (isset($card_database[$card_id])): $card = $card_database[$card_id]; ?>
+                        <td><?php echo esc_html($card['best_for'] ?? '-'); ?></td>
+                        <?php endif; endforeach; ?>
+                    </tr>
+                    <tr><td><strong>Minimum Income</strong></td>
+                        <?php foreach ($compare_cards as $card_id): if (isset($card_database[$card_id])): $card = $card_database[$card_id]; ?>
+                        <td><?php echo esc_html($card['min_income'] ?? '-'); ?></td>
+                        <?php endif; endforeach; ?>
+                    </tr>
+                    <tr class="apply-row"><td><strong>Apply Now</strong></td>
+                        <?php foreach ($compare_cards as $card_id): if (isset($card_database[$card_id])): $card = $card_database[$card_id]; ?>
+                        <td><a href="<?php echo esc_url($card['apply_link']); ?>" target="_blank" class="apply-btn">Apply Online</a></td>
+                        <?php endif; endforeach; ?>
                     </tr>
                 </tbody>
             </table>
