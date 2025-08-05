@@ -1413,26 +1413,33 @@ body {
             if (isset($card_database[$card_id])):
                 $card = $card_database[$card_id]; 
                 $img_exts = array('.webp', '.jpg', '.png', '.jpeg', '.JPG', '.PNG', '.WEBP');
-                $img_base = ABSPATH . 'wp-content/uploads/card-images/' . $card_id;
-                $img_url_base = home_url('/wp-content/uploads/card-images/' . $card_id);
-                $card_image = '';
+                $img_candidates = array();
+                // Standard slug-based candidates
                 foreach ($img_exts as $ext) {
-                    if (file_exists($img_base . $ext)) {
-                        $card_image = $img_url_base . $ext;
-                        break;
-                    }
+                    $img_candidates[] = $card_id . $ext;
+                    $img_candidates[] = strtolower($card_id) . $ext;
+                    $img_candidates[] = strtoupper($card_id) . $ext;
+                    $img_candidates[] = ucfirst($card_id) . $ext;
                 }
-                // Try fallback with str_replace for case/variant issues
-                if (!$card_image) {
-                    $variants = array(strtolower($card_id), strtoupper($card_id), ucfirst($card_id));
-                    foreach ($variants as $variant) {
-                        foreach ($img_exts as $ext) {
-                            $try = ABSPATH . 'wp-content/uploads/card-images/' . $variant . $ext;
-                            if (file_exists($try)) {
-                                $card_image = home_url('/wp-content/uploads/card-images/' . $variant . $ext);
-                                break 2;
-                            }
-                        }
+                // Special-case: HDFC Regalia (match individual page logic)
+                if ($card_id === 'hdfc-regalia') {
+                    $img_candidates = array_merge($img_candidates, array(
+                        'HDFC-Regalia-Gold.jpg',
+                        'HDFC-Regalia-Gold-card-only.jpg',
+                        'HDFC-Regalia-Gold-original-backup.jpg',
+                        'hdfc-regalia-fallback.jpg',
+                        'hdfc-regalia.jpg',
+                        'HDFC-Regalia.jpg',
+                        'hdfc_regalia.jpg',
+                        'HDFC_Regalia.jpg'
+                    ));
+                }
+                $card_image = '';
+                foreach ($img_candidates as $img_file) {
+                    $img_path = ABSPATH . 'wp-content/uploads/card-images/' . $img_file;
+                    if (file_exists($img_path)) {
+                        $card_image = home_url('/wp-content/uploads/card-images/' . $img_file);
+                        break;
                     }
                 }
                 if (!$card_image) {
