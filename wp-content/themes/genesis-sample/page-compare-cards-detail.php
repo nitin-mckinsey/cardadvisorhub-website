@@ -1403,95 +1403,160 @@ body {
 
     <div class="container">
         <a href="<?php echo home_url('/compare-cards/'); ?>" class="back-button">← Back to Card Selection</a>
-        
+        <style>
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 18px 10px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .comparison-table th {
+            background: #f7f7f7;
+            font-size: 15px;
+            font-weight: 600;
+            color: #222;
+        }
+        .comparison-table .card-header {
+            background: #f7f7f7;
+        }
+        .comparison-table .card-image {
+            width: 120px;
+            height: 75px;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 8px;
+        }
+        .comparison-table .card-name {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        .comparison-table .card-bank {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 2px;
+        }
+        .comparison-table .rating {
+            font-size: 12px;
+            color: #ffc107;
+        }
+        .comparison-table .apply-btn {
+            display: inline-block;
+            background: #dc143c;
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .comparison-table .apply-btn:hover {
+            background: #a80c2a;
+        }
+        @media (max-width: 900px) {
+            .comparison-table th, .comparison-table td {
+                padding: 10px 4px;
+                font-size: 13px;
+            }
+            .comparison-table .card-image {
+                width: 80px;
+                height: 50px;
+            }
+        }
+        @media (max-width: 600px) {
+            .comparison-table {
+                font-size: 12px;
+            }
+            .comparison-table th, .comparison-table td {
+                padding: 6px 2px;
+            }
+        }
+        </style>
         <div class="comparison-wrapper" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-            <table class="comparison-table" style="min-width: 700px;">
+            <table class="comparison-table">
                 <thead>
                     <tr class="card-header">
-                        <th style="width: 200px;">Comparison</th>
+                        <th style="width: 140px; background: #fff; border-bottom: none;"></th>
                         <?php foreach ($compare_cards as $card_id): 
-            if (isset($card_database[$card_id])):
-                $card = $card_database[$card_id]; 
-                $img_exts = array('.webp', '.jpg', '.png', '.jpeg', '.JPG', '.PNG', '.WEBP');
-                $img_candidates = array();
-                // Standard slug-based candidates
-                foreach ($img_exts as $ext) {
-                    $img_candidates[] = $card_id . $ext;
-                    $img_candidates[] = strtolower($card_id) . $ext;
-                    $img_candidates[] = strtoupper($card_id) . $ext;
-                    $img_candidates[] = ucfirst($card_id) . $ext;
-                }
-                // Special-case: HDFC Regalia (match individual page logic)
-                if ($card_id === 'hdfc-regalia') {
-                    $img_candidates = array_merge($img_candidates, array(
-                        'HDFC-Regalia-Gold.jpg',
-                        'HDFC-Regalia-Gold-card-only.jpg',
-                        'HDFC-Regalia-Gold-original-backup.jpg',
-                        'hdfc-regalia-fallback.jpg',
-                        'hdfc-regalia.jpg',
-                        'HDFC-Regalia.jpg',
-                        'hdfc_regalia.jpg',
-                        'HDFC_Regalia.jpg'
-                    ));
-                }
-                $card_image = '';
-                $theme_dir = get_template_directory_uri() . '/images/cards/';
-                $uploads_dir = home_url('/wp-content/uploads/card-images/');
-                $found = false;
-                // Special-case: HDFC Regalia, try exact known filenames in theme dir first
-                if ($card_id === 'hdfc-regalia') {
-                    $regalia_theme_files = array(
-                        'HDFC-Regalia-Gold.jpg',
-                        'HDFC-Regalia-Gold-card-only.jpg',
-                        'HDFC-Regalia-Gold-original-backup.jpg',
-                        'hdfc-regalia-fallback.jpg'
-                    );
-                    foreach ($regalia_theme_files as $img_file) {
-                        $theme_url = $theme_dir . $img_file;
-                        echo '<!-- Trying theme: ' . esc_url($theme_url) . ' -->';
-                        $card_image = $theme_url;
-                        $found = true;
-                        break;
-                    }
-                }
-                // For all cards, try slug-based candidates in uploads dir
-                if (!$found) {
-                    foreach ($img_candidates as $img_file) {
-                        $uploads_url = $uploads_dir . $img_file;
-                        echo '<!-- Trying uploads: ' . esc_url($uploads_url) . ' -->';
-                        $card_image = $uploads_url;
-                        $found = true;
-                        break;
-                    }
-                }
-                if (!$found || !$card_image) {
-                    $card_image = home_url('/wp-content/uploads/card-images/default-card.jpg');
-                }
-                $card_page_url = home_url("/credit-cards/{$card_id}/");
-                ?>
-                <th style="text-align: center; padding: 15px;">
-                    <!-- Card image URL: <?php echo esc_url($card_image); ?> -->
-                    <div class="card-image-container">
-                        <a href="<?php echo esc_url($card_page_url); ?>" class="card-link">
-                            <img src="<?php echo esc_url($card_image); ?>" 
-                                 alt="<?php echo esc_attr($card['name']); ?>" 
-                                 class="card-image"
-                                 style="width: 160px; height: 100px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin-bottom: 10px;"
-                                 onerror="this.onerror=null;this.src='<?php echo esc_url(home_url('/wp-content/uploads/card-images/default-card.jpg')); ?>';">
-                        </a>
-                    </div>
-                    <div class="card-info" style="color: #fff;">
-                        <a href="<?php echo esc_url($card_page_url); ?>" class="card-link" style="color: #fff; text-decoration: none;">
-                            <div class="card-name" style="font-weight: bold; font-size: 14px; margin-bottom: 5px;"><?php echo esc_html($card['name']); ?></div>
-                        </a>
-                        <div class="card-bank" style="font-size: 12px; opacity: 0.9; margin-bottom: 5px;"><?php echo esc_html($card['bank']); ?></div>
-                        <div class="rating" style="font-size: 12px;">
-                            <span style="color: #ffc107;">★★★★☆</span> <?php echo esc_html($card['rating']); ?>
-                        </div>
-                    </div>
-                </th>
-            <?php endif;
-        endforeach; ?>
+                            if (isset($card_database[$card_id])):
+                                $card = $card_database[$card_id]; 
+                                $img_exts = array('.webp', '.jpg', '.png', '.jpeg', '.JPG', '.PNG', '.WEBP');
+                                $img_candidates = array();
+                                foreach ($img_exts as $ext) {
+                                    $img_candidates[] = $card_id . $ext;
+                                    $img_candidates[] = strtolower($card_id) . $ext;
+                                    $img_candidates[] = strtoupper($card_id) . $ext;
+                                    $img_candidates[] = ucfirst($card_id) . $ext;
+                                }
+                                if ($card_id === 'hdfc-regalia') {
+                                    $img_candidates = array_merge($img_candidates, array(
+                                        'HDFC-Regalia-Gold.jpg',
+                                        'HDFC-Regalia-Gold-card-only.jpg',
+                                        'HDFC-Regalia-Gold-original-backup.jpg',
+                                        'hdfc-regalia-fallback.jpg',
+                                        'hdfc-regalia.jpg',
+                                        'HDFC-Regalia.jpg',
+                                        'hdfc_regalia.jpg',
+                                        'HDFC_Regalia.jpg'
+                                    ));
+                                }
+                                $card_image = '';
+                                $theme_dir = get_template_directory_uri() . '/images/cards/';
+                                $uploads_dir = home_url('/wp-content/uploads/card-images/');
+                                $found = false;
+                                if ($card_id === 'hdfc-regalia') {
+                                    $regalia_theme_files = array(
+                                        'HDFC-Regalia-Gold.jpg',
+                                        'HDFC-Regalia-Gold-card-only.jpg',
+                                        'HDFC-Regalia-Gold-original-backup.jpg',
+                                        'hdfc-regalia-fallback.jpg'
+                                    );
+                                    foreach ($regalia_theme_files as $img_file) {
+                                        $theme_url = $theme_dir . $img_file;
+                                        $card_image = $theme_url;
+                                        $found = true;
+                                        break;
+                                    }
+                                }
+                                if (!$found) {
+                                    foreach ($img_candidates as $img_file) {
+                                        $uploads_url = $uploads_dir . $img_file;
+                                        $card_image = $uploads_url;
+                                        $found = true;
+                                        break;
+                                    }
+                                }
+                                if (!$found || !$card_image) {
+                                    $card_image = home_url('/wp-content/uploads/card-images/default-card.jpg');
+                                }
+                                $card_page_url = home_url("/credit-cards/{$card_id}/");
+                        ?>
+                        <th style="background: #fff; border-bottom: none;">
+                            <div class="card-image-container">
+                                <a href="<?php echo esc_url($card_page_url); ?>" class="card-link">
+                                    <img src="<?php echo esc_url($card_image); ?>" 
+                                         alt="<?php echo esc_attr($card['name']); ?>" 
+                                         class="card-image"
+                                         onerror="this.onerror=null;this.src='<?php echo esc_url(home_url('/wp-content/uploads/card-images/default-card.jpg')); ?>';">
+                                </a>
+                            </div>
+                            <div class="card-name"><?php echo esc_html($card['name']); ?></div>
+                            <div class="card-bank"><?php echo esc_html($card['bank']); ?></div>
+                            <div class="rating">
+                                <span>★★★★☆</span> <?php echo esc_html($card['rating']); ?>
+                            </div>
+                        </th>
+                        <?php endif; endforeach; ?>
                     </tr>
                 </thead>
                 <tbody>
