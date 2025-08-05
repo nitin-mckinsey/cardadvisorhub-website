@@ -277,6 +277,7 @@ body {
 .comparison-table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
 }
 
 .comparison-table th {
@@ -288,6 +289,12 @@ body {
     border-right: 1px solid #34495e;
 }
 
+.comparison-table th:first-child {
+    background: #34495e;
+    text-align: left;
+    width: 200px;
+}
+
 .comparison-table td {
     padding: 1.5rem 1rem;
     text-align: center;
@@ -296,9 +303,25 @@ body {
     vertical-align: top;
 }
 
+.comparison-table td:first-child {
+    background: #f8f9fa;
+    font-weight: 600;
+    text-align: left;
+    color: #2c3e50;
+}
+
 .card-header {
     background: #f8f9fa;
     border-bottom: 2px solid #007bff;
+}
+
+.apply-row {
+    background: #f8f9fa;
+    border-top: 2px solid #28a745;
+}
+
+.apply-row td {
+    padding: 2rem 1rem;
 }
 
 .card-name {
@@ -362,18 +385,34 @@ body {
         padding: 0 0.5rem;
     }
     
+    .comparison-table {
+        font-size: 0.85rem;
+        table-layout: auto;
+    }
+    
     .comparison-table th,
     .comparison-table td {
         padding: 0.75rem 0.5rem;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+    }
+    
+    .comparison-table th:first-child,
+    .comparison-table td:first-child {
+        width: 120px;
+        font-size: 0.8rem;
     }
     
     .card-name {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
     .page-header h1 {
         font-size: 2rem;
+    }
+    
+    .apply-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
     }
 }
 
@@ -412,6 +451,7 @@ body {
             <table class="comparison-table">
                 <thead>
                     <tr class="card-header">
+                        <th style="width: 200px;">Comparison</th>
                         <?php foreach ($compare_cards as $card_id): 
                             if (isset($card_database[$card_id])):
                                 $card = $card_database[$card_id]; ?>
@@ -503,7 +543,7 @@ body {
                         endforeach; ?>
                     </tr>
                     
-                    <tr class="card-header">
+                    <tr class="apply-row">
                         <td><strong>Apply Now</strong></td>
                         <?php foreach ($compare_cards as $card_id): 
                             if (isset($card_database[$card_id])):
