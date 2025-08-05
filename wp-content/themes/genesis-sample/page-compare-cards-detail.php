@@ -1436,17 +1436,13 @@ body {
                 }
                 $card_image = '';
                 foreach ($img_candidates as $img_file) {
-                    $img_path = ABSPATH . 'wp-content/uploads/card-images/' . $img_file;
-                    // Debug output for troubleshooting
-                    echo "<!-- Trying: $img_path -->\n";
-                    if (file_exists($img_path)) {
-                        $card_image = home_url('/wp-content/uploads/card-images/' . $img_file);
-                        echo "<!-- FOUND: $img_path as $card_image -->\n";
-                        break;
-                    }
+                    $img_url = home_url('/wp-content/uploads/card-images/' . $img_file);
+                    // Use the first candidate, let browser handle fallback
+                    $card_image = $img_url;
+                    break;
                 }
                 if (!$card_image) {
-                    echo "<!-- No image found for $card_id, using default. -->\n";
+                    $card_image = home_url('/wp-content/uploads/card-images/default-card.jpg');
                 }
                 if (!$card_image) {
                     $card_image = home_url('/wp-content/uploads/card-images/default-card.jpg');
