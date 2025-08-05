@@ -74,7 +74,7 @@ get_header(); ?>
           <div class="values-grid">
             <div class="value-item">
               <h3>🔒 Transparency</h3>
-              <p>We clearly disclose our affiliate relationships and compensation while maintaining editorial independence in our recommendations.</p>
+
             </div>
             <div class="value-item">
               <h3>📈 Accuracy</h3>
@@ -133,10 +133,9 @@ get_header(); ?>
       <div class="about-section">
         <div class="section-content">
           <h2>How We Make Money</h2>
-          <p>CardAdvisorHub operates on an affiliate marketing model. We receive compensation from credit card issuers when users apply for and are approved for credit cards through our platform. This may include:</p>
+          
           <ul class="money-list">
-            <li>Referral fees from successful credit card applications</li>
-            <li>Commission payments from partner banks and financial institutions</li>
+            
             <li>Advertising revenue from card issuers</li>
           </ul>
           <div class="transparency-note">

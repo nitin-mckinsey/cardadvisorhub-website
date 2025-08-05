@@ -26,16 +26,7 @@ get_header(); ?>
     </div>
   </section>
 
-  <section class="terms-content">
-    <div class="container">
-      <div class="content-wrapper">
-        
-        <div class="terms-section">
-          <h2>1. Acceptance of Terms</h2>
-          <p>By accessing and using CardAdvisorHub ("we," "our," or "us"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
-        </div>
-
-        <div class="terms-section">
+          
           <h2>2. Description of Service</h2>
           <p>CardAdvisorHub is a credit card comparison and recommendation platform that provides:</p>
           <ul>

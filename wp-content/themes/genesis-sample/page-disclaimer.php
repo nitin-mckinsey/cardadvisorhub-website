@@ -47,17 +47,7 @@ get_header(); ?>
         </div>
 
         <div class="disclaimer-section">
-          <h2>Affiliate Relationships</h2>
-          <h3>Compensation Disclosure</h3>
-          <p>CardAdvisorHub participates in affiliate marketing programs and may receive compensation when you apply for or are approved for credit cards through our platform. This compensation may influence:</p>
-          <ul>
-            <li>The order in which credit cards are displayed</li>
-            <li>The prominence given to certain offers</li>
-            <li>The frequency of updates for specific cards</li>
-          </ul>
-
-          <h3>Editorial Independence</h3>
-          <p>Despite our affiliate relationships, we maintain editorial independence and strive to provide honest, unbiased reviews and comparisons. Our recommendations are based on thorough research and analysis of card features, benefits, and value propositions.</p>
+          
         </div>
 
         <div class="disclaimer-section">

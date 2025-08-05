@@ -375,7 +375,7 @@ container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
             <li>✅ HDFC bank reliability</li>
           </ul>
           
-          <!-- Affiliate Disclosure Removed -->
+          
         </div>
         
         <div class="application-cta">
