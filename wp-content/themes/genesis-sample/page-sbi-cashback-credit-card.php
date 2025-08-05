@@ -217,10 +217,23 @@ get_header(); ?>
     <!-- Hero Section -->
     <section class="card-hero">
         <div class="container">
-            <img src="<?php echo home_url('/wp-content/uploads/card-images/sbi-cashback.jpg'); ?>" 
-                 alt="SBI Cashback Credit Card" 
-                 class="card-image-hero"
-                 onerror="this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>'">
+            <?php
+            $card_slug = 'sbi-cashback';
+            $uploads = home_url('/wp-content/uploads/card-images/');
+            $img_exts = array('jpg', 'png', 'webp');
+            $card_img = '';
+            foreach ($img_exts as $ext) {
+                $try = ABSPATH . 'wp-content/uploads/card-images/' . $card_slug . '.' . $ext;
+                if (file_exists($try)) {
+                    $card_img = $uploads . $card_slug . '.' . $ext;
+                    break;
+                }
+            }
+            if (!$card_img) {
+                $card_img = $uploads . 'default-card.jpg';
+            }
+            ?>
+            <img src="<?php echo esc_url($card_img); ?>" class="card-image-hero" alt="SBI Cashback Credit Card" onerror="this.onerror=null;this.src='<?php echo $uploads . 'default-card.jpg'; ?>';">
             
             <h1>SBI Cashback Credit Card</h1>
             <p>Unlimited 5% cashback on online shopping with no cashback cap</p>

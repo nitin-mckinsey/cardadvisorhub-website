@@ -19,8 +19,25 @@
       <div class="card-hero-content">
         <div class="card-visual">
           <div class="credit-card-container" style="text-align: center; margin: 20px 0;">
-    <img src="<?php echo get_template_directory_uri(); ?>/images/cards/Axis-Atlas.jpg" alt="Axis Atlas Credit Card" class="credit-card-image" 
-         style="max-width: 400px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);">
+    <?php
+    $card_slug = 'axis-privilege';
+    $uploads = home_url('/wp-content/uploads/card-images/');
+    $img_exts = array('jpg', 'png', 'webp');
+    $card_img = '';
+    foreach ($img_exts as $ext) {
+        $try = ABSPATH . 'wp-content/uploads/card-images/' . $card_slug . '.' . $ext;
+        if (file_exists($try)) {
+            $card_img = $uploads . $card_slug . '.' . $ext;
+            break;
+        }
+    }
+    if (!$card_img) {
+        $card_img = $uploads . 'default-card.jpg';
+    }
+    ?>
+    <img src="<?php echo esc_url($card_img); ?>" alt="Axis Privilege Credit Card" class="credit-card-image" 
+         style="max-width: 400px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);"
+         onerror="this.onerror=null;this.src='<?php echo $uploads . 'default-card.jpg'; ?>';">
 </div>
           <div class="card-rating">
             <div class="stars">★★★★☆</div>

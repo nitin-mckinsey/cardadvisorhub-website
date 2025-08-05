@@ -18,7 +18,23 @@
       <div class="card-hero-content">
         <div class="card-visual">
           <div class="card-image">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='190'%3E%3Crect width='300' height='190' rx='15' fill='%23FF4500'/%3E%3Ctext x='20' y='40' font-family='Arial' font-size='18' font-weight='bold' fill='%23FFF'%3EBob%3C/text%3E%3Ctext x='20' y='65' font-family='Arial' font-size='14' fill='%23FFF'%3EPremier%3C/text%3E%3Ctext x='20' y='130' font-family='Arial' font-size='12' fill='%23FFF'%3E•••• •••• •••• 6789%3C/text%3E%3Ctext x='20' y='155' font-family='Arial' font-size='10' fill='%23FFF'%3ECARDMEMBER NAME%3C/text%3E%3Ctext x='220' y='155' font-family='Arial' font-size='10' fill='%23FFF'%3E12/28%3C/text%3E%3C/svg%3E" alt="Bank of Baroda Premier Credit Card">
+            <?php
+            $card_slug = 'bank-of-baroda-premier';
+            $uploads = home_url('/wp-content/uploads/card-images/');
+            $img_exts = array('jpg', 'png', 'webp');
+            $card_img = '';
+            foreach ($img_exts as $ext) {
+                $try = ABSPATH . 'wp-content/uploads/card-images/' . $card_slug . '.' . $ext;
+                if (file_exists($try)) {
+                    $card_img = $uploads . $card_slug . '.' . $ext;
+                    break;
+                }
+            }
+            if (!$card_img) {
+                $card_img = $uploads . 'default-card.jpg';
+            }
+            ?>
+            <img src="<?php echo esc_url($card_img); ?>" alt="Bank of Baroda Premier Credit Card" class="credit-card-image" style="max-width: 300px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);" onerror="this.onerror=null;this.src='<?php echo $uploads . 'default-card.jpg'; ?>';">
           </div>
           <div class="card-rating">
             <div class="stars">★★★★☆</div>

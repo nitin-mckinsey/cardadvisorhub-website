@@ -3,6 +3,7 @@
 // Enhanced with structured data and SEO variables
 
 // SEO Variables for Rank Math Integration
+
 $card_name = "Axis Magnus Credit Card";
 $bank_name = "Axis Bank";
 $main_benefit = "Premium Travel Rewards and Unlimited Lounge Access";
@@ -10,6 +11,22 @@ $annual_fee = "₹12,500 + GST (fee waived on annual spends of ₹15 lakhs)";
 $welcome_benefit = "25,000 Welcome Bonus Points";
 $best_for = "Travel enthusiasts, premium lifestyle, and high spenders";
 $apply_link = "https://www.axisbank.com/retail/cards/credit-card/magnus-credit-card";
+
+// Robust image logic for Axis Magnus
+$card_slug = 'axis-magnus';
+$uploads = home_url('/wp-content/uploads/card-images/');
+$img_exts = array('jpg', 'png', 'webp');
+$card_img = '';
+foreach ($img_exts as $ext) {
+    $try = ABSPATH . 'wp-content/uploads/card-images/' . $card_slug . '.' . $ext;
+    if (file_exists($try)) {
+        $card_img = $uploads . $card_slug . '.' . $ext;
+        break;
+    }
+}
+if (!$card_img) {
+    $card_img = $uploads . 'default-card.jpg';
+}
 
 // SEO Meta Tags for Axis Magnus
 add_action('wp_head', function() use ($card_name, $bank_name, $main_benefit, $annual_fee) {
@@ -27,14 +44,14 @@ add_action('wp_head', function() use ($card_name, $bank_name, $main_benefit, $an
     echo '<meta property="og:description" content="' . $page_description . '">';
     echo '<meta property="og:type" content="article">';
     echo '<meta property="og:url" content="' . get_permalink() . '">';
-    echo '<meta property="og:image" content="' . get_template_directory_uri() . '/images/axis-magnus-card.jpg">';
+    echo '<meta property="og:image" content="' . esc_url($card_img) . '">';
     echo '<meta property="og:site_name" content="CardAdvisorHub">';
     
     // Twitter Cards
     echo '<meta name="twitter:card" content="summary_large_image">';
     echo '<meta name="twitter:title" content="Axis Magnus Credit Card - Premium Travel Rewards">';
     echo '<meta name="twitter:description" content="' . $page_description . '">';
-    echo '<meta name="twitter:image" content="' . get_template_directory_uri() . '/images/axis-magnus-card.jpg">';
+    echo '<meta name="twitter:image" content="' . esc_url($card_img) . '">';
 }, 1);
 
 // Add structured data for SEO
@@ -49,7 +66,7 @@ function axis_magnus_structured_data() {
         "name": "<?php echo $card_name; ?>",
         "description": "<?php echo $card_name; ?> offering <?php echo $main_benefit; ?> with premium travel benefits and milestone rewards",
         "category": "Credit Card",
-        "image": "<?php echo get_template_directory_uri(); ?>/images/axis-magnus-card.jpg",
+        "image": "<?php echo esc_url($card_img); ?>",
         "brand": {
             "@type": "Brand",
             "name": "<?php echo $bank_name; ?>"
@@ -129,56 +146,7 @@ get_header(); ?>
       <div class="card-hero-content">
         <div class="card-visual">
           <div class="card-image">
-            <svg width="300" height="190" viewBox="0 0 300 190" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="magnusMainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
-                  <stop offset="30%" style="stop-color:#1a1a1a;stop-opacity:1" />
-                  <stop offset="70%" style="stop-color:#2a2a2a;stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
-                </linearGradient>
-                <linearGradient id="magnusGoldAccent" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" style="stop-color:#DAA520;stop-opacity:1" />
-                  <stop offset="50%" style="stop-color:#FFD700;stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
-                </linearGradient>
-                <radialGradient id="chipGold" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#DAA520;stop-opacity:1" />
-                </radialGradient>
-                <linearGradient id="axisPurpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" style="stop-color:#722F37;stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#8B1538;stop-opacity:1" />
-                </linearGradient>
-              </defs>
-              
-              <!-- Main card background -->
-              <rect width="300" height="190" rx="12" fill="url(#magnusMainGradient)" stroke="#333" stroke-width="0.5"/>
-              
-              <!-- Subtle texture overlay -->
-              <rect x="2" y="2" width="296" height="186" rx="10" fill="url(#magnusMainGradient)" opacity="0.3"/>
-              
-              <!-- Axis Bank Logo Area -->
-              <rect x="15" y="15" width="90" height="35" rx="4" fill="url(#axisPurpleGrad)"/>
-              <text x="60" y="28" font-family="Arial Black, sans-serif" font-size="11" font-weight="900" fill="white" text-anchor="middle">AXIS BANK</text>
-              <text x="60" y="40" font-family="Arial, sans-serif" font-size="7" fill="white" text-anchor="middle" opacity="0.9">CREDIT CARD</text>
-              
-              <!-- MAGNUS branding with gold effect -->
-              <text x="20" y="75" font-family="Arial Black, sans-serif" font-size="26" font-weight="900" fill="url(#magnusGoldAccent)" letter-spacing="1px">MAGNUS</text>
-              <text x="20" y="90" font-family="Arial, sans-serif" font-size="9" fill="white" opacity="0.8">WORLD'S MOST REWARDING</text>
-              
-              <!-- Chip with realistic details -->
-              <rect x="20" y="105" width="24" height="18" rx="3" fill="url(#chipGold)" stroke="#B8860B" stroke-width="0.5"/>
-              <!-- Chip contact lines -->
-              <line x1="22" y1="107" x2="42" y2="107" stroke="#B8860B" stroke-width="0.3"/>
-              <line x1="22" y1="110" x2="42" y2="110" stroke="#B8860B" stroke-width="0.3"/>
-              <line x1="22" y1="113" x2="42" y2="113" stroke="#B8860B" stroke-width="0.3"/>
-              <line x1="22" y1="116" x2="42" y2="116" stroke="#B8860B" stroke-width="0.3"/>
-              <line x1="22" y1="119" x2="42" y2="119" stroke="#B8860B" stroke-width="0.3"/>
-              <line x1="22" y1="121" x2="42" y2="121" stroke="#B8860B" stroke-width="0.3"/>
-              
-              <!-- Mastercard Logo with authentic colors -->
-              <svg x="55" y="105" width="40" height="24" viewBox="0 0 40 24">
+            <img src="<?php echo esc_url($card_img); ?>" alt="Axis Magnus Credit Card" class="credit-card-image" onerror="this.onerror=null;this.src='<?php echo $uploads . 'default-card.jpg'; ?>';" width="300" height="190" loading="lazy" />
                 <circle cx="12" cy="12" r="10" fill="#EB001B"/>
                 <circle cx="28" cy="12" r="10" fill="#FF5F00"/>
                 <path d="M20 5.5 A 7.5 7.5 0 0 1 20 18.5 A 7.5 7.5 0 0 1 20 5.5 Z" fill="#FF5F00"/>

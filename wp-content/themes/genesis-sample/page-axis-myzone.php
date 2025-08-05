@@ -84,7 +84,7 @@ get_header(); ?>
       <div class="card-hero-content">
         <div class="card-visual">
           <div class="card-image">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='190'%3E%3Crect width='300' height='190' rx='15' fill='%23673AB7'/%3E%3Ctext x='20' y='40' font-family='Arial' font-size='18' font-weight='bold' fill='white'%3EAxis%3C/text%3E%3Ctext x='20' y='65' font-family='Arial' font-size='14' fill='white'%3EMyZone%3C/text%3E%3Ctext x='20' y='130' font-family='Arial' font-size='12' fill='white'%3E•••• •••• •••• 7890%3C/text%3E%3Ctext x='20' y='155' font-family='Arial' font-size='10' fill='white'%3ECARDMEMBER NAME%3C/text%3E%3Ctext x='220' y='155' font-family='Arial' font-size='10' fill='white'%3E12/28%3C/text%3E%3C/svg%3E" alt="Axis MyZone Credit Card">
+            <img src="<?php echo esc_url($card_img); ?>" alt="Axis MyZone Credit Card" class="credit-card-image" style="max-width: 300px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);" onerror="this.onerror=null;this.src='<?php echo $uploads . 'default-card.jpg'; ?>';">
           </div>
           <div class="card-rating">
             <div class="stars">★★★★☆</div>

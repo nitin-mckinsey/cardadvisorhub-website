@@ -36,14 +36,29 @@ add_action('wp_head', function() {
     echo '<meta property="og:description" content="' . $card_description . '">';
     echo '<meta property="og:type" content="product">';
     echo '<meta property="og:url" content="' . get_permalink() . '">';
-    echo '<meta property="og:image" content="' . get_template_directory_uri() . '/images/amex-smartearn-card.jpg">';
+    // Robust image logic for Amex SmartEarn
+    $card_slug = 'american-express-smartearn';
+    $uploads = home_url('/wp-content/uploads/card-images/');
+    $img_exts = array('jpg', 'png', 'webp');
+    $card_img = '';
+    foreach ($img_exts as $ext) {
+        $try = ABSPATH . 'wp-content/uploads/card-images/' . $card_slug . '.' . $ext;
+        if (file_exists($try)) {
+            $card_img = $uploads . $card_slug . '.' . $ext;
+            break;
+        }
+    }
+    if (!$card_img) {
+        $card_img = $uploads . 'default-card.jpg';
+    }
+    echo '<meta property="og:image" content="' . esc_url($card_img) . '">';
     echo '<meta property="og:site_name" content="CardAdvisorHub">';
     
     // Twitter Card Tags
     echo '<meta name="twitter:card" content="summary_large_image">';
     echo '<meta name="twitter:title" content="' . $card_name . ' - AMEX Cashback">';
     echo '<meta name="twitter:description" content="' . $card_description . '">';
-    echo '<meta name="twitter:image" content="' . get_template_directory_uri() . '/images/amex-smartearn-card.jpg">';
+    echo '<meta name="twitter:image" content="' . esc_url($card_img) . '">';
     
     // JSON-LD Schema
     $schema = array(
@@ -52,7 +67,7 @@ add_action('wp_head', function() {
         'name' => $card_name,
         'description' => $card_description,
         'category' => 'Credit Card',
-        'image' => get_template_directory_uri() . '/images/amex-smartearn-card.jpg',
+        'image' => esc_url($card_img),
         'brand' => array(
             '@type' => 'Brand',
             'name' => $bank_name
@@ -84,40 +99,7 @@ get_header(); ?>
       <div class="card-hero-content">
         <div class="card-visual">
           <div class="card-image">
-            <svg width="300" height="190" viewBox="0 0 300 190" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="amexSmartEarnGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#B22222;stop-opacity:1" />
-                  <stop offset="50%" style="stop-color:#DC143C;stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#FF6347;stop-opacity:1" />
-                </linearGradient>
-              </defs>
-              <rect width="300" height="190" rx="15" fill="url(#amexSmartEarnGradient)" stroke="#CCC" stroke-width="1"/>
-              <svg x="20" y="20" width="100" height="50" viewBox="0 0 120 60" fill="none">
-                <rect width="120" height="60" fill="#FFFFFF" rx="5"/>
-                <text x="60" y="25" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#B22222" text-anchor="middle">AMERICAN</text>
-                <text x="60" y="45" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#B22222" text-anchor="middle">EXPRESS</text>
-              </svg>
-              <text x="20" y="90" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">SMARTEARN</text>
-              <text x="20" y="110" font-family="Arial, sans-serif" font-size="12" fill="#F5F5F5">Credit Card</text>
-              <svg x="200" y="20" width="60" height="40" viewBox="0 0 60 40" fill="none">
-                <rect width="60" height="40" fill="#004080" rx="3"/>
-                <text x="30" y="25" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white" text-anchor="middle">AMEX</text>
-              </svg>
-              <g transform="translate(20, 155)">
-                <rect width="18" height="12" fill="#444"/>
-                <rect x="24" width="18" height="12" fill="#444"/>
-                <rect x="48" width="18" height="12" fill="#444"/>
-                <rect x="72" width="18" height="12" fill="#444"/>
-              </g>
-              <text x="230" y="35" font-family="Arial, sans-serif" font-size="10" fill="#CCC">VALID THRU</text>
-              <text x="230" y="50" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">12/28</text>
-              <text x="20" y="140" font-family="Courier, monospace" font-size="12" font-weight="bold" fill="white">3782 8224 6310 7890</text>
-              <svg x="240" y="135" width="40" height="30" viewBox="0 0 40 30" fill="none">
-                <rect width="40" height="30" fill="#444" rx="3"/>
-                <text x="20" y="20" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white" text-anchor="middle">NFC</text>
-              </svg>
-            </svg>
+            <img src="<?php echo esc_url($card_img); ?>" alt="American Express SmartEarn Credit Card" class="credit-card-image" style="max-width: 300px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);" onerror="this.onerror=null;this.src='<?php echo $uploads . 'default-card.jpg'; ?>';">
           </div>
           <div class="card-rating">
             <div class="stars">â˜…â˜…â˜…â˜…â˜†</div>

@@ -3,6 +3,7 @@
 // Enhanced with structured data and SEO variables
 
 // SEO Variables for Rank Math Integration
+
 $card_name = "Axis Bank ACE Credit Card";
 $bank_name = "Axis Bank";
 $main_benefit = "5% Cashback on Bill Payments and Recharges";
@@ -10,6 +11,22 @@ $annual_fee = "₹499 + GST";
 $welcome_benefit = "₹500 Gift Voucher";
 $best_for = "Bill payments and utility expenses";
 $apply_link = "https://www.axisbank.com/retail/cards/credit-card/ace-credit-card";
+
+// Robust image logic for Axis ACE
+$card_slug = 'axis-ace';
+$uploads = home_url('/wp-content/uploads/card-images/');
+$img_exts = array('jpg', 'png', 'webp');
+$card_img = '';
+foreach ($img_exts as $ext) {
+    $try = ABSPATH . 'wp-content/uploads/card-images/' . $card_slug . '.' . $ext;
+    if (file_exists($try)) {
+        $card_img = $uploads . $card_slug . '.' . $ext;
+        break;
+    }
+}
+if (!$card_img) {
+    $card_img = $uploads . 'default-card.jpg';
+}
 
 // Add structured data for SEO
 add_action( 'wp_footer', 'axis_ace_structured_data' );
@@ -23,7 +40,7 @@ function axis_ace_structured_data() {
         "name": "<?php echo $card_name; ?>",
         "description": "<?php echo $card_name; ?> offering <?php echo $main_benefit; ?> - best card for utility expenses",
         "category": "Credit Card",
-        "image": "<?php echo get_template_directory_uri(); ?>/images/axis-ace-card.jpg",
+        "image": "<?php echo esc_url($card_img); ?>",
         "brand": {
             "@type": "Brand",
             "name": "<?php echo $bank_name; ?>"
@@ -85,14 +102,14 @@ add_action('wp_head', function() {
     echo '<meta property="og:description" content="' . $card_description . '">';
     echo '<meta property="og:type" content="product">';
     echo '<meta property="og:url" content="' . get_permalink() . '">';
-    echo '<meta property="og:image" content="' . get_template_directory_uri() . '/images/axis-ace-card.jpg">';
+    echo '<meta property="og:image" content="' . esc_url($card_img) . '">';
     echo '<meta property="og:site_name" content="CardAdvisorHub">';
     
     // Twitter Card Tags
     echo '<meta name="twitter:card" content="summary_large_image">';
     echo '<meta name="twitter:title" content="' . $card_name . ' - Bill Payment Cashback">';
     echo '<meta name="twitter:description" content="' . $card_description . '">';
-    echo '<meta name="twitter:image" content="' . get_template_directory_uri() . '/images/axis-ace-card.jpg">';
+    echo '<meta name="twitter:image" content="' . esc_url($card_img) . '">';
     
     // Structured Data - Product Schema
     echo '<script type="application/ld+json">
@@ -101,7 +118,7 @@ add_action('wp_head', function() {
         "@type": "Product",
         "name": "' . $card_name . '",
         "description": "' . $card_description . '",
-        "image": "' . get_template_directory_uri() . '/images/axis-ace-card.jpg",
+        "image": "' . esc_url($card_img) . '",
         "brand": {
             "@type": "Brand",
             "name": "' . $bank_name . '"
@@ -281,8 +298,9 @@ get_header(); ?>
       <div class="card-hero-content">
         <div class="card-visual">
           <div class="credit-card-container" style="text-align: center; margin: 20px 0;">
-    <img src="<?php echo get_template_directory_uri(); ?>/images/cards/Axis-Atlas.jpg" alt="Axis Atlas Credit Card" class="credit-card-image" 
-         style="max-width: 400px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);">
+    <img src="<?php echo esc_url($card_img); ?>" alt="Axis ACE Credit Card" class="credit-card-image" 
+         style="max-width: 400px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);"
+         onerror="this.onerror=null;this.src='<?php echo $uploads . 'default-card.jpg'; ?>';">
 </div>
           <div class="card-rating">
             <div class="stars">★★★★★</div>
