@@ -1553,7 +1553,7 @@ body {
                                 // Special case: icici-amazon-pay card page URL
                                 $card_page_url_final = $card_page_url;
                                 if ($card_id === 'icici-amazon-pay') {
-                                    $card_page_url_final = home_url('/wp-content/themes/genesis-sample/page-icici-amazon.php');
+                                    $card_page_url_final = home_url('/icici-amazon/');
                                 }
                                 ?>
                                 <a href="<?php echo esc_url($card_page_url_final); ?>" class="card-link">
