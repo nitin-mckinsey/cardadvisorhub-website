@@ -101,7 +101,22 @@ function hdfc_millennia_structured_data() {
         }
     }
     </script>
-    <?php
+<?php 
+// Fallback for missing affiliate functions
+if (!function_exists('get_tracked_affiliate_url')) {
+    function get_tracked_affiliate_url($slug = '', $context = '') {
+        // Default to HDFC Millennia official link if slug matches, else home
+        if ($slug === 'hdfc-millennia') {
+            return 'https://www.hdfcbank.com/personal/pay/cards/credit-cards/millennia-credit-card';
+        }
+        return home_url();
+    }
+}
+if (!function_exists('get_affiliate_disclosure')) {
+    function get_affiliate_disclosure() {
+        return 'CardAdvisorHub may receive a commission from the bank if you apply through links on this page. This does not affect our reviews or recommendations.';
+    }
+}
 }
 
 get_header(); ?>
