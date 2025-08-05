@@ -18,24 +18,24 @@ add_action('init', function() {
 
 // Enhanced image path handling
 function get_icici_coral_image_url($version = 'primary') {
-    $base_path = get_template_directory_uri() . '/images/cards/';
-    $fallback_base = home_url('/wp-content/themes/genesis-sample/images/cards/');
-    
-    $images = array(
-        'primary' => 'ICICI-Coral.jpg',
-        'card_only' => 'ICICI-Coral-card-only.jpg',
-        'backup' => 'ICICI-Coral-backup.jpg',
-        'fallback' => 'icici-coral-fallback.jpg'
-    );
-    
-    $paths_to_try = array(
-        $base_path . $images[$version],
-        $fallback_base . $images[$version],
-        $base_path . strtolower($images[$version]),
-        $fallback_base . strtolower($images[$version])
-    );
-    
-    return $paths_to_try;
+// Robust card image logic for ICICI Coral
+function get_icici_coral_image_url() {
+    $card_slug = 'icici-coral';
+    $uploads = home_url('/wp-content/uploads/card-images/');
+    $img_exts = array('jpg', 'png', 'webp');
+    $card_img = '';
+    foreach ($img_exts as $ext) {
+        $try = ABSPATH . 'wp-content/uploads/card-images/' . $card_slug . '.' . $ext;
+        if (file_exists($try)) {
+            $card_img = $uploads . '/' . $card_slug . '.' . $ext;
+            break;
+        }
+    }
+    if (!$card_img) {
+        $card_img = $uploads . '/default-card.jpg';
+    }
+    return $card_img;
+}
 }
 
 // SEO Meta Tags for ICICI Coral
@@ -43,8 +43,7 @@ add_action('wp_head', function() use ($card_name, $bank_name, $main_benefit, $an
     $page_title = 'ICICI Bank Coral Credit Card Review 2025 - Lifetime Free Card | CardAdvisorHub';
     $page_keywords = 'ICICI Coral credit card, lifetime free credit card, 2X reward points, ICICI Bank card, entry level credit card';
     
-    $image_urls = get_icici_coral_image_url('primary');
-    $primary_image = $image_urls[0];
+    $primary_image = get_icici_coral_image_url();
     
     echo '<meta name="keywords" content="' . $page_keywords . '">';
     echo '<meta name="robots" content="index, follow">';
@@ -55,6 +54,7 @@ add_action('wp_head', function() use ($card_name, $bank_name, $main_benefit, $an
     echo '<meta property="og:type" content="article">';
     echo '<meta property="og:url" content="' . get_permalink() . '">';
     echo '<meta property="og:image" content="' . $primary_image . '">';
+    echo '<meta property="og:image" content="' . esc_url($primary_image) . '">';
     echo '<meta property="og:site_name" content="CardAdvisorHub">';
     
     // Twitter Cards
@@ -62,14 +62,14 @@ add_action('wp_head', function() use ($card_name, $bank_name, $main_benefit, $an
     echo '<meta name="twitter:title" content="ICICI Bank Coral Credit Card - Lifetime Free">';
     echo '<meta name="twitter:description" content="ICICI Bank Coral Credit Card is a lifetime free card with 2X reward points and excellent starter benefits.">';
     echo '<meta name="twitter:image" content="' . $primary_image . '">';
+    echo '<meta name="twitter:image" content="' . esc_url($primary_image) . '">';
 }, 1);
 
 // Add structured data for SEO
 add_action( 'wp_footer', 'icici_coral_structured_data' );
 function icici_coral_structured_data() {
     global $card_name, $bank_name, $main_benefit, $annual_fee, $welcome_benefit, $apply_link;
-    $image_urls = get_icici_coral_image_url('primary');
-    $primary_image = $image_urls[0];
+    $primary_image = get_icici_coral_image_url();
     ?>
     <script type="application/ld+json">
     {
@@ -79,6 +79,9 @@ function icici_coral_structured_data() {
         "description": "<?php echo $card_name; ?> offering <?php echo $main_benefit; ?> with no annual fee ever",
         "category": "Lifetime Free Credit Card",
         "image": "<?php echo $primary_image; ?>",
+        "image": "<?php echo esc_url($primary_image); ?>",
+                         src="<?php echo esc_url($primary_image); ?>"
+                         onerror="this.onerror=null;this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>';">
         "brand": {
             "@type": "Brand",
             "name": "<?php echo $bank_name; ?>"

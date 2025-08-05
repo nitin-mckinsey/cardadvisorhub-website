@@ -17,25 +17,23 @@ add_action('init', function() {
 });
 
 // Enhanced image path handling
-function get_hdfc_dcb_image_url($version = 'primary') {
-    $base_path = get_template_directory_uri() . '/images/cards/';
-    $fallback_base = home_url('/wp-content/themes/genesis-sample/images/cards/');
-    
-    $images = array(
-        'primary' => 'HDFC-Diners-Club-Black.jpg',
-        'card_only' => 'HDFC-Diners-Club-Black-card-only.jpg',
-        'backup' => 'HDFC-DCB-backup.jpg',
-        'fallback' => 'hdfc-diners-black-fallback.jpg'
-    );
-    
-    $paths_to_try = array(
-        $base_path . $images[$version],
-        $fallback_base . $images[$version],
-        $base_path . strtolower($images[$version]),
-        $fallback_base . strtolower($images[$version])
-    );
-    
-    return $paths_to_try;
+// Robust card image logic for HDFC Diners Club Black
+function get_hdfc_dcb_image_url() {
+    $card_slug = 'hdfc-diners-club-black';
+    $uploads = home_url('/wp-content/uploads/card-images/');
+    $img_exts = array('jpg', 'png', 'webp');
+    $card_img = '';
+    foreach ($img_exts as $ext) {
+        $try = ABSPATH . 'wp-content/uploads/card-images/' . $card_slug . '.' . $ext;
+        if (file_exists($try)) {
+            $card_img = $uploads . '/' . $card_slug . '.' . $ext;
+            break;
+        }
+    }
+    if (!$card_img) {
+        $card_img = $uploads . '/default-card.jpg';
+    }
+    return $card_img;
 }
 
 // SEO Meta Tags for HDFC DCB
@@ -43,8 +41,7 @@ add_action('wp_head', function() use ($card_name, $bank_name, $main_benefit, $an
     $page_title = 'HDFC Diners Club Black Credit Card Review 2025 - 10X International | CardAdvisorHub';
     $page_keywords = 'HDFC Diners Club Black credit card, premium metal card, 10X international points, luxury credit card India, HDFC DCB';
     
-    $image_urls = get_hdfc_dcb_image_url('primary');
-    $primary_image = $image_urls[0];
+    $primary_image = get_hdfc_dcb_image_url();
     
     echo '<meta name="keywords" content="' . $page_keywords . '">';
     echo '<meta name="robots" content="index, follow">';
@@ -54,22 +51,21 @@ add_action('wp_head', function() use ($card_name, $bank_name, $main_benefit, $an
     echo '<meta property="og:description" content="HDFC Diners Club Black Credit Card offers 10X reward points on international spends, unlimited airport lounge access, and premium metal card benefits. Annual fee ₹10,000.">';
     echo '<meta property="og:type" content="article">';
     echo '<meta property="og:url" content="' . get_permalink() . '">';
-    echo '<meta property="og:image" content="' . $primary_image . '">';
+    echo '<meta property="og:image" content="' . esc_url($primary_image) . '">';
     echo '<meta property="og:site_name" content="CardAdvisorHub">';
     
     // Twitter Cards
     echo '<meta name="twitter:card" content="summary_large_image">';
     echo '<meta name="twitter:title" content="HDFC Diners Club Black Credit Card - 10X International">';
     echo '<meta name="twitter:description" content="HDFC Diners Club Black Credit Card offers 10X reward points on international spends, unlimited airport lounge access, and premium metal card benefits.">';
-    echo '<meta name="twitter:image" content="' . $primary_image . '">';
+    echo '<meta name="twitter:image" content="' . esc_url($primary_image) . '">';
 }, 1);
 
 // Add structured data for SEO
 add_action( 'wp_footer', 'hdfc_dcb_structured_data' );
 function hdfc_dcb_structured_data() {
     global $card_name, $bank_name, $main_benefit, $annual_fee, $welcome_benefit, $apply_link;
-    $image_urls = get_hdfc_dcb_image_url('primary');
-    $primary_image = $image_urls[0];
+    $primary_image = get_hdfc_dcb_image_url();
     ?>
     <script type="application/ld+json">
     {
@@ -78,7 +74,7 @@ function hdfc_dcb_structured_data() {
         "name": "<?php echo $card_name; ?>",
         "description": "<?php echo $card_name; ?> offering <?php echo $main_benefit; ?> with premium metal card and unlimited airport lounge access",
         "category": "Premium Credit Card",
-        "image": "<?php echo $primary_image; ?>",
+        "image": "<?php echo esc_url($primary_image); ?>",
         "brand": {
             "@type": "Brand",
             "name": "<?php echo $bank_name; ?>"
@@ -319,10 +315,10 @@ get_header(); ?>
                 <div class="image-container">
                     <img id="hero-card-image" 
                          class="hero-card-image" 
-                         src="<?php echo home_url('/wp-content/uploads/card-images/hdfc-diners-club-black.jpg'); ?>"
+                         src="<?php echo esc_url($primary_image); ?>"
                          alt="HDFC Diners Club Black Credit Card" 
                          itemprop="image"
-                         onerror="this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>'">
+                         onerror="this.onerror=null;this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>';">
                 </div>
             </div>
         </div>
@@ -463,27 +459,7 @@ get_header(); ?>
 </main>
 
 <script>
-// Enhanced image loading with multiple fallbacks
-document.addEventListener('DOMContentLoaded', function() {
-    const img = document.getElementById('hero-card-image');
-    const imageUrls = <?php echo json_encode(get_hdfc_dcb_image_url('primary')); ?>;
-    
-    let currentIndex = 0;
-    
-    function tryNextImage() {
-        if (currentIndex < imageUrls.length) {
-            img.src = imageUrls[currentIndex];
-            currentIndex++;
-        }
-    }
-    
-    img.onerror = function() {
-        tryNextImage();
-    };
-    
-    // Start with first image
-    tryNextImage();
-});
+
 </script>
 
 <?php get_footer(); ?>

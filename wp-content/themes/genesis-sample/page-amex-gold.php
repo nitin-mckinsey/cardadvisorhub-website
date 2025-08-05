@@ -17,25 +17,23 @@ add_action('init', function() {
 });
 
 // Enhanced image path handling
-function get_amex_gold_image_url($version = 'primary') {
-    $base_path = get_template_directory_uri() . '/images/cards/';
-    $fallback_base = home_url('/wp-content/themes/genesis-sample/images/cards/');
-    
-    $images = array(
-        'primary' => 'Amex-Gold.jpg',
-        'card_only' => 'Amex-Gold-card-only.jpg',
-        'backup' => 'Amex-Gold-backup.jpg',
-        'fallback' => 'amex-gold-fallback.jpg'
-    );
-    
-    $paths_to_try = array(
-        $base_path . $images[$version],
-        $fallback_base . $images[$version],
-        $base_path . strtolower($images[$version]),
-        $fallback_base . strtolower($images[$version])
-    );
-    
-    return $paths_to_try;
+// Robust card image logic for Amex Gold
+function get_amex_gold_image_url() {
+    $card_slug = 'amex-gold';
+    $uploads = home_url('/wp-content/uploads/card-images/');
+    $img_exts = array('jpg', 'png', 'webp');
+    $card_img = '';
+    foreach ($img_exts as $ext) {
+        $try = ABSPATH . 'wp-content/uploads/card-images/' . $card_slug . '.' . $ext;
+        if (file_exists($try)) {
+            $card_img = $uploads . '/' . $card_slug . '.' . $ext;
+            break;
+        }
+    }
+    if (!$card_img) {
+        $card_img = $uploads . '/default-card.jpg';
+    }
+    return $card_img;
 }
 
 // SEO Meta Tags for Amex Gold
@@ -43,8 +41,7 @@ add_action('wp_head', function() use ($card_name, $bank_name, $main_benefit, $an
     $page_title = 'American Express Gold Card Review 2025 - 4X Dining Points | CardAdvisorHub';
     $page_keywords = 'American Express Gold card, Amex Gold credit card, 4X dining points, travel rewards, membership rewards, premium credit card India';
     
-    $image_urls = get_amex_gold_image_url('primary');
-    $primary_image = $image_urls[0];
+    $primary_image = get_amex_gold_image_url();
     
     echo '<meta name="keywords" content="' . $page_keywords . '">';
     echo '<meta name="robots" content="index, follow">';
@@ -54,22 +51,21 @@ add_action('wp_head', function() use ($card_name, $bank_name, $main_benefit, $an
     echo '<meta property="og:description" content="American Express Gold Card offers 4X Membership Rewards points on dining & travel, exclusive experiences, and premium benefits. Effective annual fee just ₹1,000.">';
     echo '<meta property="og:type" content="article">';
     echo '<meta property="og:url" content="' . get_permalink() . '">';
-    echo '<meta property="og:image" content="' . $primary_image . '">';
+    echo '<meta property="og:image" content="' . esc_url($primary_image) . '">';
     echo '<meta property="og:site_name" content="CardAdvisorHub">';
     
     // Twitter Cards
     echo '<meta name="twitter:card" content="summary_large_image">';
     echo '<meta name="twitter:title" content="American Express Gold Card - 4X Dining Points">';
     echo '<meta name="twitter:description" content="American Express Gold Card offers 4X Membership Rewards points on dining & travel, exclusive experiences, and premium benefits.">';
-    echo '<meta name="twitter:image" content="' . $primary_image . '">';
+    echo '<meta name="twitter:image" content="' . esc_url($primary_image) . '">';
 }, 1);
 
 // Add structured data for SEO
 add_action( 'wp_footer', 'amex_gold_structured_data' );
 function amex_gold_structured_data() {
     global $card_name, $bank_name, $main_benefit, $annual_fee, $welcome_benefit, $apply_link;
-    $image_urls = get_amex_gold_image_url('primary');
-    $primary_image = $image_urls[0];
+    $primary_image = get_amex_gold_image_url();
     ?>
     <script type="application/ld+json">
     {
@@ -78,7 +74,7 @@ function amex_gold_structured_data() {
         "name": "<?php echo $card_name; ?>",
         "description": "<?php echo $card_name; ?> offering <?php echo $main_benefit; ?> with Membership Rewards and exclusive Amex experiences",
         "category": "Premium Credit Card",
-        "image": "<?php echo $primary_image; ?>",
+        "image": "<?php echo esc_url($primary_image); ?>",
         "brand": {
             "@type": "Brand",
             "name": "<?php echo $bank_name; ?>"
@@ -316,10 +312,10 @@ get_header(); ?>
                 <div class="image-container">
                     <img id="hero-card-image" 
                          class="hero-card-image" 
-                         src="<?php echo home_url('/wp-content/uploads/card-images/amex-gold.jpg'); ?>"
+                         src="<?php echo esc_url($primary_image); ?>"
                          alt="American Express Gold Card" 
                          itemprop="image"
-                         onerror="this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>'">
+                         onerror="this.onerror=null;this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>';">
                 </div>
             </div>
         </div>

@@ -36,14 +36,29 @@ add_action('wp_head', function() {
     echo '<meta property="og:description" content="' . $card_description . '">';
     echo '<meta property="og:type" content="product">';
     echo '<meta property="og:url" content="' . get_permalink() . '">';
-    echo '<meta property="og:image" content="' . get_template_directory_uri() . '/images/hdfc-diners-black-card.jpg">';
+    // Robust card image logic
+    $card_slug = 'hdfc-diners-club';
+    $uploads = home_url('/wp-content/uploads/card-images/');
+    $img_exts = array('jpg', 'png', 'webp');
+    $card_img = '';
+    foreach ($img_exts as $ext) {
+        $try = ABSPATH . 'wp-content/uploads/card-images/' . $card_slug . '.' . $ext;
+        if (file_exists($try)) {
+            $card_img = $uploads . '/' . $card_slug . '.' . $ext;
+            break;
+        }
+    }
+    if (!$card_img) {
+        $card_img = $uploads . '/default-card.jpg';
+    }
+    echo '<meta property="og:image" content="' . $card_img . '">';
     echo '<meta property="og:site_name" content="CardAdvisorHub">';
     
     // Twitter Card Tags
     echo '<meta name="twitter:card" content="summary_large_image">';
     echo '<meta name="twitter:title" content="' . $card_name . ' - Luxury Travel">';
     echo '<meta name="twitter:description" content="' . $card_description . '">';
-    echo '<meta name="twitter:image" content="' . get_template_directory_uri() . '/images/hdfc-diners-black-card.jpg">';
+    echo '<meta name="twitter:image" content="' . $card_img . '">';
     
     // JSON-LD Schema
     $schema = array(
@@ -52,7 +67,7 @@ add_action('wp_head', function() {
         'name' => $card_name,
         'description' => $card_description,
         'category' => 'Credit Card',
-        'image' => get_template_directory_uri() . '/images/hdfc-diners-black-card.jpg',
+        'image' => $card_img,
         'brand' => array(
             '@type' => 'Brand',
             'name' => $bank_name
@@ -84,37 +99,7 @@ get_header(); ?>
       <div class="card-hero-content">
         <div class="card-visual">
           <div class="card-image">
-            <svg width="300" height="190" viewBox="0 0 300 190" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="hdfcDinersGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#1C1C1C;stop-opacity:1" />
-                  <stop offset="50%" style="stop-color:#2F2F2F;stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#4A4A4A;stop-opacity:1" />
-                </linearGradient>
-              </defs>
-              <rect width="300" height="190" rx="15" fill="url(#hdfcDinersGradient)" stroke="#FFD700" stroke-width="2"/>
-              <svg x="20" y="20" width="80" height="40" viewBox="0 0 100 50" fill="none">
-                <rect width="100" height="50" fill="#004381"/>
-                <text x="50" y="20" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">HDFC</text>
-                <text x="50" y="35" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle">BANK</text>
-              </svg>
-              <text x="20" y="80" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFD700">DINERS CLUB</text>
-              <text x="20" y="100" font-family="Arial, sans-serif" font-size="12" fill="white">Credit Card</text>
-              <svg x="20" y="120" width="40" height="24" viewBox="0 0 40 24" fill="none">
-                <rect width="40" height="24" rx="3" fill="#FFD700"/>
-                <rect x="5" y="5" width="30" height="14" fill="#1C1C1C"/>
-                <text x="20" y="14" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#FFD700" text-anchor="middle">DINERS</text>
-              </svg>
-              <text x="230" y="35" font-family="Arial, sans-serif" font-size="10" fill="#CCC">VALID THRU</text>
-              <text x="230" y="50" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">12/28</text>
-              <text x="20" y="155" font-family="Courier, monospace" font-size="12" font-weight="bold" fill="white">5369 3000 1234 5678</text>
-              <text x="180" y="80" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFD700">PREMIUM</text>
-              <text x="180" y="95" font-family="Arial, sans-serif" font-size="9" fill="#FFD700">TRAVEL</text>
-              <svg x="250" y="120" width="30" height="20" viewBox="0 0 30 20" fill="none">
-                <rect width="30" height="20" fill="#444" rx="3"/>
-                <text x="15" y="13" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="white" text-anchor="middle">NFC</text>
-              </svg>
-            </svg>
+            <img src="<?php echo esc_url($card_img); ?>" alt="HDFC Diners Club Credit Card" class="hero-card-image" onerror="this.onerror=null;this.src='<?php echo $uploads . '/default-card.jpg'; ?>';">
           </div>
           <div class="card-rating">
             <div class="stars">★★★★★</div>

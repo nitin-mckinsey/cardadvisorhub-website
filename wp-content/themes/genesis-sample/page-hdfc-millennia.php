@@ -220,8 +220,9 @@ get_header(); ?>
       <div class="card-hero-content">
         <div class="card-visual">
           <div class="credit-card-container" style="text-align: center; margin: 20px 0;">
-    <img src="<?php echo get_template_directory_uri(); ?>/images/cards/HDFC-Regalia-Gold.jpg" alt="HDFC Regalia Gold Credit Card" class="credit-card-image" 
-         style="max-width: 400px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);">
+    <img src="<?php echo home_url('/wp-content/uploads/card-images/hdfc-millennia.jpg'); ?>" alt="HDFC Millennia Credit Card" class="credit-card-image" 
+         style="max-width: 400px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);"
+         onerror="this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>'">
 </div>
           <div class="card-rating">
             <div class="stars">★★★★☆</div>
@@ -505,8 +506,9 @@ get_header(); ?>
 </main>
 
 <div class="credit-card-container" style="text-align: center; margin: 20px 0;">
-    <img src="<?php echo get_template_directory_uri(); ?>/images/cards/HDFC-Regalia-Gold.jpg" alt="HDFC Regalia Gold Credit Card" class="credit-card-image" 
-         style="max-width: 400px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);">
+    <img src="<?php echo home_url('/wp-content/uploads/card-images/hdfc-millennia.jpg'); ?>" alt="HDFC Millennia Credit Card" class="credit-card-image" 
+         style="max-width: 400px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);"
+         onerror="this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>'">
 </div>
 
 <!-- FAQ SECTION -->

@@ -17,25 +17,23 @@ add_action('init', function() {
 });
 
 // Enhanced image path handling
-function get_amex_platinum_travel_image_url($version = 'primary') {
-    $base_path = get_template_directory_uri() . '/images/cards/';
-    $fallback_base = home_url('/wp-content/themes/genesis-sample/images/cards/');
-    
-    $images = array(
-        'primary' => 'Amex-Platinum-Travel.jpg',
-        'card_only' => 'Amex-Platinum-Travel-card-only.jpg',
-        'backup' => 'Amex-Platinum-backup.jpg',
-        'fallback' => 'amex-platinum-travel-fallback.jpg'
-    );
-    
-    $paths_to_try = array(
-        $base_path . $images[$version],
-        $fallback_base . $images[$version],
-        $base_path . strtolower($images[$version]),
-        $fallback_base . strtolower($images[$version])
-    );
-    
-    return $paths_to_try;
+// Robust card image logic for Amex Platinum Travel
+function get_amex_platinum_travel_image_url() {
+    $card_slug = 'amex-platinum-travel';
+    $uploads = home_url('/wp-content/uploads/card-images/');
+    $img_exts = array('jpg', 'png', 'webp');
+    $card_img = '';
+    foreach ($img_exts as $ext) {
+        $try = ABSPATH . 'wp-content/uploads/card-images/' . $card_slug . '.' . $ext;
+        if (file_exists($try)) {
+            $card_img = $uploads . '/' . $card_slug . '.' . $ext;
+            break;
+        }
+    }
+    if (!$card_img) {
+        $card_img = $uploads . '/default-card.jpg';
+    }
+    return $card_img;
 }
 
 // SEO Meta Tags for Amex Platinum Travel
@@ -43,8 +41,7 @@ add_action('wp_head', function() use ($card_name, $bank_name, $main_benefit, $an
     $page_title = 'American Express Platinum Travel Credit Card Review 2025 - 5X Travel Points | CardAdvisorHub';
     $page_keywords = 'American Express Platinum Travel credit card, 5X travel points, ultra premium travel card, luxury travel benefits India, Amex Platinum';
     
-    $image_urls = get_amex_platinum_travel_image_url('primary');
-    $primary_image = $image_urls[0];
+    $primary_image = get_amex_platinum_travel_image_url();
     
     echo '<meta name="keywords" content="' . $page_keywords . '">';
     echo '<meta name="robots" content="index, follow">';
@@ -54,22 +51,21 @@ add_action('wp_head', function() use ($card_name, $bank_name, $main_benefit, $an
     echo '<meta property="og:description" content="American Express Platinum Travel Credit Card offers 5X Membership Rewards on flights & hotels, unlimited airport lounge access, and ultra-premium travel benefits. Annual fee ₹60,000.">';
     echo '<meta property="og:type" content="article">';
     echo '<meta property="og:url" content="' . get_permalink() . '">';
-    echo '<meta property="og:image" content="' . $primary_image . '">';
+    echo '<meta property="og:image" content="' . esc_url($primary_image) . '">';
     echo '<meta property="og:site_name" content="CardAdvisorHub">';
     
     // Twitter Cards
     echo '<meta name="twitter:card" content="summary_large_image">';
     echo '<meta name="twitter:title" content="American Express Platinum Travel Credit Card - 5X Travel Points">';
     echo '<meta name="twitter:description" content="American Express Platinum Travel Credit Card offers 5X Membership Rewards on flights & hotels, unlimited airport lounge access, and ultra-premium travel benefits.">';
-    echo '<meta name="twitter:image" content="' . $primary_image . '">';
+    echo '<meta name="twitter:image" content="' . esc_url($primary_image) . '">';
 }, 1);
 
 // Add structured data for SEO
 add_action( 'wp_footer', 'amex_platinum_travel_structured_data' );
 function amex_platinum_travel_structured_data() {
     global $card_name, $bank_name, $main_benefit, $annual_fee, $welcome_benefit, $apply_link;
-    $image_urls = get_amex_platinum_travel_image_url('primary');
-    $primary_image = $image_urls[0];
+    $primary_image = get_amex_platinum_travel_image_url();
     ?>
     <script type="application/ld+json">
     {
@@ -78,7 +74,7 @@ function amex_platinum_travel_structured_data() {
         "name": "<?php echo $card_name; ?>",
         "description": "<?php echo $card_name; ?> offering <?php echo $main_benefit; ?> with ultra-premium travel benefits and exclusive Amex experiences",
         "category": "Ultra-Premium Travel Credit Card",
-        "image": "<?php echo $primary_image; ?>",
+        "image": "<?php echo esc_url($primary_image); ?>",
         "brand": {
             "@type": "Brand",
             "name": "<?php echo $bank_name; ?>"
@@ -317,10 +313,10 @@ get_header(); ?>
                 <div class="image-container">
                     <img id="hero-card-image" 
                          class="hero-card-image" 
-                         src="<?php echo home_url('/wp-content/uploads/card-images/amex-platinum-travel.jpg'); ?>"
+                         src="<?php echo esc_url($primary_image); ?>"
                          alt="American Express Platinum Travel Credit Card" 
                          itemprop="image"
-                         onerror="this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>'">
+                         onerror="this.onerror=null;this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>';">
                 </div>
             </div>
         </div>
@@ -460,28 +456,6 @@ get_header(); ?>
 </section>
 </main>
 
-<script>
-// Enhanced image loading with multiple fallbacks
-document.addEventListener('DOMContentLoaded', function() {
-    const img = document.getElementById('hero-card-image');
-    const imageUrls = <?php echo json_encode(get_amex_platinum_travel_image_url('primary')); ?>;
-    
-    let currentIndex = 0;
-    
-    function tryNextImage() {
-        if (currentIndex < imageUrls.length) {
-            img.src = imageUrls[currentIndex];
-            currentIndex++;
-        }
-    }
-    
-    img.onerror = function() {
-        tryNextImage();
-    };
-    
-    // Start with first image
-    tryNextImage();
-});
-</script>
+
 
 <?php get_footer(); ?>
