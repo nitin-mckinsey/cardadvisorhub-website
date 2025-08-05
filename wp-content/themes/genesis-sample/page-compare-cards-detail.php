@@ -1511,7 +1511,7 @@ body {
                                     ));
                                 }
                                 $card_image = '';
-                                $theme_dir = home_url('/wp-content/themes/genesis-sample/images/cards/');
+                                $theme_dir = 'https://cardadvisorhub.com/wp-content/themes/genesis-sample/images/cards/';
                                 $uploads_dir = home_url('/wp-content/uploads/card-images/');
                                 $found = false;
                                 if ($card_id === 'hdfc-regalia') {
