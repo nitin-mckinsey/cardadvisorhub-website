@@ -102,21 +102,6 @@ function hdfc_millennia_structured_data() {
     }
     </script>
 <?php 
-// Fallback for missing affiliate functions
-if (!function_exists('get_tracked_affiliate_url')) {
-    function get_tracked_affiliate_url($slug = '', $context = '') {
-        // Default to HDFC Millennia official link if slug matches, else home
-        if ($slug === 'hdfc-millennia') {
-            return 'https://www.hdfcbank.com/personal/pay/cards/credit-cards/millennia-credit-card';
-        }
-        return home_url();
-    }
-}
-if (!function_exists('get_affiliate_disclosure')) {
-    function get_affiliate_disclosure() {
-        return 'CardAdvisorHub may receive a commission from the bank if you apply through links on this page. This does not affect our reviews or recommendations.';
-    }
-}
 }
 
 get_header(); ?>
@@ -175,11 +160,10 @@ container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
           </div>
           
           <div class="cta-buttons">
-            <a href="<?php echo get_tracked_affiliate_url('hdfc-millennia', 'hero_cta'); ?>" 
+            <a href="https://www.hdfcbank.com/personal/pay/cards/credit-cards/millennia-credit-card" 
                class="btn btn-primary" 
                target="_blank" 
-               rel="noopener noreferrer"
-               onclick="gtag('event', 'click', {'event_category': 'affiliate', 'event_label': 'hdfc-millennia-hero'});">
+               rel="noopener noreferrer">
                Apply Now - Official HDFC Bank
             </a>
             <button id="add-to-compare" class="btn btn-outline">Add to Compare</button>
@@ -391,10 +375,7 @@ container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
             <li>✅ HDFC bank reliability</li>
           </ul>
           
-          <!-- Affiliate Disclosure -->
-          <div class="affiliate-disclosure">
-            <p><small><?php echo get_affiliate_disclosure(); ?></small></p>
-          </div>
+          <!-- Affiliate Disclosure Removed -->
         </div>
         
         <div class="application-cta">
@@ -402,11 +383,10 @@ container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
           <p>Get instant approval and start earning cashback today!</p>
           
           <div class="cta-buttons-stacked">
-            <a href="<?php echo get_tracked_affiliate_url('hdfc-millennia', 'application_section'); ?>" 
+            <a href="https://www.hdfcbank.com/personal/pay/cards/credit-cards/millennia-credit-card" 
                class="btn btn-primary btn-large" 
                target="_blank" 
-               rel="noopener noreferrer"
-               onclick="gtag('event', 'click', {'event_category': 'affiliate', 'event_label': 'hdfc-millennia-apply'});">
+               rel="noopener noreferrer">
                🚀 Apply Now on HDFC Bank Official Website
             </a>
             
