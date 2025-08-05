@@ -474,7 +474,7 @@ get_header(); ?>
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
-                <a href="<?php echo $apply_link; ?>" target="_blank" class="apply-btn">Apply Now - Get ₹1,000 Welcome Vouchers</a>
+                <a href="https://www.hdfcbank.com/personal/pay/cards/credit-cards/millennia-credit-card" target="_blank" class="apply-btn">Apply Now - Get ₹1,000 Welcome Vouchers</a>
             </div>
         </div>
     </div>

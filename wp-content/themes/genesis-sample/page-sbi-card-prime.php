@@ -2,8 +2,6 @@
 // SBI Card PRIME Credit Card Page
 // SEO managed by Rank Math plugin
 
-// Include affiliate configuration
-require_once 'affiliate-config.php';
 
 get_header(); ?>
 
@@ -82,11 +80,10 @@ get_header(); ?>
           </div>
           
           <div class="cta-buttons">
-            <a href="<?php echo get_tracked_affiliate_url('sbi-card-prime', 'hero_cta'); ?>" 
+            <a href="https://www.sbicard.com/en/personal/credit-cards/lifestyle/sbi-card-prime.page" 
                class="btn btn-primary" 
                target="_blank" 
-               rel="noopener noreferrer"
-               onclick="gtag('event', 'click', {'event_category': 'affiliate', 'event_label': 'sbi-card-prime-hero'});">
+               rel="noopener noreferrer">
                Apply Now - Official SBI Card
             </a>
             <button id="add-to-compare" class="btn btn-outline">Add to Compare</button>
