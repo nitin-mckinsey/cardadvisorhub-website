@@ -1549,7 +1549,14 @@ body {
                         <th style="background: #fff; border-bottom: none;">
                             <!-- card_id: <?php echo $card_id; ?>, chosen_img_file: <?php echo isset($img_file) ? $img_file : 'N/A'; ?>, card_image_url: <?php echo esc_url($card_image); ?> -->
                             <div class="card-image-container">
-                                <a href="<?php echo esc_url($card_page_url); ?>" class="card-link">
+                                <?php
+                                // Special case: icici-amazon-pay card page URL
+                                $card_page_url_final = $card_page_url;
+                                if ($card_id === 'icici-amazon-pay') {
+                                    $card_page_url_final = home_url('/icici-amazon-pay-credit-card/');
+                                }
+                                ?>
+                                <a href="<?php echo esc_url($card_page_url_final); ?>" class="card-link">
                                     <img src="<?php echo esc_url($card_image); ?>" 
                                          alt="<?php echo esc_attr($card['name']); ?>" 
                                          class="card-image"
