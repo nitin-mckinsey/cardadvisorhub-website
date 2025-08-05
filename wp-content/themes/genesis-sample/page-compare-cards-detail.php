@@ -165,7 +165,7 @@ $card_database = [
         'rewards' => 'Amazon: 5%, Others: 1%',
         'benefits' => ['Lifetime free', 'Amazon Prime benefits', 'No hidden charges'],
         'best_for' => 'Amazon shoppers',
-        'apply_link' => 'https://www.icicibank.com/personal-banking/cards/credit-card/amazon-pay-credit-card'
+        'apply_link' => 'https://www.amazon.in/l/15390355031'
     ],
     'icici-sapphiro' => [
         'name' => 'ICICI Bank Sapphiro',
@@ -1497,6 +1497,11 @@ body {
                                     $img_candidates[] = strtolower($card_id) . $ext;
                                     $img_candidates[] = strtoupper($card_id) . $ext;
                                     $img_candidates[] = ucfirst($card_id) . $ext;
+                                    // Special case for icici-amazon-pay: also try icici-amazon-pay.jpg and icici-amazon-pay.png
+                                    if ($card_id === 'icici-amazon-pay') {
+                                        $img_candidates[] = 'icici-amazon-pay.jpg';
+                                        $img_candidates[] = 'icici-amazon-pay.png';
+                                    }
                                 }
                                 if ($card_id === 'hdfc-regalia') {
                                     $img_candidates = array_merge($img_candidates, array(
