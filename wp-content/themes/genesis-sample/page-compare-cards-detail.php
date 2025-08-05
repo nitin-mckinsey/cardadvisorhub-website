@@ -1435,21 +1435,33 @@ body {
                     ));
                 }
                 $card_image = '';
+                $theme_dir = get_template_directory_uri() . '/images/cards/';
+                $uploads_dir = home_url('/wp-content/uploads/card-images/');
+                $found = false;
                 foreach ($img_candidates as $img_file) {
-                    $img_url = home_url('/wp-content/uploads/card-images/' . $img_file);
-                    // Use the first candidate, let browser handle fallback
-                    $card_image = $img_url;
+                    // For HDFC Regalia and other special-case images, check theme directory first
+                    if ($card_id === 'hdfc-regalia') {
+                        $theme_url = $theme_dir . $img_file;
+                        echo '<!-- Trying theme: ' . esc_url($theme_url) . ' -->';
+                        // Let browser try theme dir first
+                        $card_image = $theme_url;
+                        $found = true;
+                        break;
+                    }
+                    // Otherwise, try uploads dir
+                    $uploads_url = $uploads_dir . $img_file;
+                    echo '<!-- Trying uploads: ' . esc_url($uploads_url) . ' -->';
+                    $card_image = $uploads_url;
+                    $found = true;
                     break;
                 }
-                if (!$card_image) {
-                    $card_image = home_url('/wp-content/uploads/card-images/default-card.jpg');
-                }
-                if (!$card_image) {
+                if (!$found || !$card_image) {
                     $card_image = home_url('/wp-content/uploads/card-images/default-card.jpg');
                 }
                 $card_page_url = home_url("/credit-cards/{$card_id}/");
                 ?>
                 <th style="text-align: center; padding: 15px;">
+                    <!-- Card image URL: <?php echo esc_url($card_image); ?> -->
                     <div class="card-image-container">
                         <a href="<?php echo esc_url($card_page_url); ?>" class="card-link">
                             <img src="<?php echo esc_url($card_image); ?>" 
