@@ -1438,22 +1438,31 @@ body {
                 $theme_dir = get_template_directory_uri() . '/images/cards/';
                 $uploads_dir = home_url('/wp-content/uploads/card-images/');
                 $found = false;
-                foreach ($img_candidates as $img_file) {
-                    // For HDFC Regalia and other special-case images, check theme directory first
-                    if ($card_id === 'hdfc-regalia') {
+                // Special-case: HDFC Regalia, try exact known filenames in theme dir first
+                if ($card_id === 'hdfc-regalia') {
+                    $regalia_theme_files = array(
+                        'HDFC-Regalia-Gold.jpg',
+                        'HDFC-Regalia-Gold-card-only.jpg',
+                        'HDFC-Regalia-Gold-original-backup.jpg',
+                        'hdfc-regalia-fallback.jpg'
+                    );
+                    foreach ($regalia_theme_files as $img_file) {
                         $theme_url = $theme_dir . $img_file;
                         echo '<!-- Trying theme: ' . esc_url($theme_url) . ' -->';
-                        // Let browser try theme dir first
                         $card_image = $theme_url;
                         $found = true;
                         break;
                     }
-                    // Otherwise, try uploads dir
-                    $uploads_url = $uploads_dir . $img_file;
-                    echo '<!-- Trying uploads: ' . esc_url($uploads_url) . ' -->';
-                    $card_image = $uploads_url;
-                    $found = true;
-                    break;
+                }
+                // For all cards, try slug-based candidates in uploads dir
+                if (!$found) {
+                    foreach ($img_candidates as $img_file) {
+                        $uploads_url = $uploads_dir . $img_file;
+                        echo '<!-- Trying uploads: ' . esc_url($uploads_url) . ' -->';
+                        $card_image = $uploads_url;
+                        $found = true;
+                        break;
+                    }
                 }
                 if (!$found || !$card_image) {
                     $card_image = home_url('/wp-content/uploads/card-images/default-card.jpg');
