@@ -1542,6 +1542,7 @@ body {
                                 $card_page_url = home_url("/credit-cards/{$card_id}/");
                         ?>
                         <th style="background: #fff; border-bottom: none;">
+                            <!-- card_id: <?php echo $card_id; ?>, chosen_img_file: <?php echo isset($img_file) ? $img_file : 'N/A'; ?>, card_image_url: <?php echo esc_url($card_image); ?> -->
                             <div class="card-image-container">
                                 <a href="<?php echo esc_url($card_page_url); ?>" class="card-link">
                                     <img src="<?php echo esc_url($card_image); ?>" 
