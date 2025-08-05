@@ -1493,12 +1493,10 @@ body {
                                 $img_exts = array('.webp', '.jpg', '.png', '.jpeg', '.JPG', '.PNG', '.WEBP');
                                 $img_candidates = array();
                                 foreach ($img_exts as $ext) {
-                                    // Special case for icici-amazon-pay: prioritize icici-amazon-pay.jpg and icici-amazon-pay.png
-                                    if ($card_id === 'icici-amazon-pay') {
-                                        $img_candidates[] = 'icici-amazon-pay.jpg';
-                                        $img_candidates[] = 'icici-amazon-pay.png';
+                                    // Always prioritize [card_id].jpg and [card_id].png for all cards
+                                    if ($ext === '.jpg' || $ext === '.png') {
+                                        $img_candidates[] = $card_id . $ext;
                                     }
-                                    $img_candidates[] = $card_id . $ext;
                                     $img_candidates[] = strtolower($card_id) . $ext;
                                     $img_candidates[] = strtoupper($card_id) . $ext;
                                     $img_candidates[] = ucfirst($card_id) . $ext;
