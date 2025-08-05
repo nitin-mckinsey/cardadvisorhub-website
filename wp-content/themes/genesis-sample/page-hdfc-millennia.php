@@ -22,10 +22,10 @@ function get_hdfc_millennia_image_url($version = 'primary') {
     $fallback_base = home_url('/wp-content/themes/genesis-sample/images/cards/');
     
     $images = array(
-        'primary' => 'HDFC-Millennia.jpg',
-        'card_only' => 'HDFC-Millennia-card-only.jpg',
-        'backup' => 'HDFC-Millennia-backup.jpg',
-        'fallback' => 'hdfc-millennia-fallback.jpg'
+        'primary' => 'hdfc-millennia.png',
+        'card_only' => 'hdfc-millennia-card-only.png',
+        'backup' => 'hdfc-millennia-backup.png',
+        'fallback' => 'hdfc-millennia-fallback.png'
     );
     
     $paths_to_try = array(
@@ -220,7 +220,8 @@ get_header(); ?>
       <div class="card-hero-content">
         <div class="card-visual">
           <div class="credit-card-container" style="text-align: center; margin: 20px 0;">
-    <img src="<?php echo home_url('/wp-content/uploads/card-images/hdfc-millennia.jpg'); ?>" alt="HDFC Millennia Credit Card" class="credit-card-image" 
+    <?php $image_urls = get_hdfc_millennia_image_url('primary'); ?>
+    <img src="<?php echo esc_url($image_urls[0]); ?>" alt="HDFC Millennia Credit Card" class="credit-card-image" 
          style="max-width: 400px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);"
          onerror="this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>'">
 </div>
@@ -506,7 +507,8 @@ get_header(); ?>
 </main>
 
 <div class="credit-card-container" style="text-align: center; margin: 20px 0;">
-    <img src="<?php echo home_url('/wp-content/uploads/card-images/hdfc-millennia.jpg'); ?>" alt="HDFC Millennia Credit Card" class="credit-card-image" 
+    <?php $image_urls = get_hdfc_millennia_image_url('primary'); ?>
+    <img src="<?php echo esc_url($image_urls[0]); ?>" alt="HDFC Millennia Credit Card" class="credit-card-image" 
          style="max-width: 400px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);"
          onerror="this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>'">
 </div>
