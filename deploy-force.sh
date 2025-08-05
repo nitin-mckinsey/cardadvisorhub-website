@@ -1,12 +1,14 @@
 #!/bin/bash
 
-# Force deployment script for WordPress site
+# Force deployment script for WordPress site on Hostinger
 # This script handles conflicts with existing files on the server
+# Designed to work with GitHub webhooks on Hostinger
 
 echo "Starting forced deployment..."
 
-# Navigate to project directory
-cd /path/to/your/project/directory || exit 1
+# Navigate to project directory (adjust this path for your Hostinger setup)
+# Common Hostinger paths: /home/username/public_html or /home/username/domains/yourdomain.com/public_html
+cd $HOME/public_html || cd $HOME/domains/*/public_html || exit 1
 
 # Check if it's a git repository
 if [ ! -d ".git" ]; then
