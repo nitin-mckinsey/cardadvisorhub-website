@@ -1303,7 +1303,7 @@ body {
                 $card = $card_database[$card_id]; 
                 $img_base = ABSPATH . 'wp-content/uploads/card-images/' . $card_id;
                 $img_url_base = home_url('/wp-content/uploads/card-images/' . $card_id);
-                $img_exts = array('.jpg', '.png', '.webp');
+                $img_exts = array('.webp', '.jpg', '.png');
                 $card_image = '';
                 foreach ($img_exts as $ext) {
                     if (file_exists($img_base . $ext)) {
@@ -1323,7 +1323,7 @@ body {
                                  alt="<?php echo esc_attr($card['name']); ?>" 
                                  class="card-image"
                                  style="width: 160px; height: 100px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin-bottom: 10px;"
-                                 onerror="this.onerror=null;this.src='<?php echo home_url('/wp-content/uploads/card-images/default-card.jpg'); ?>'">
+                                 onerror="this.onerror=null;this.src='<?php echo esc_url(home_url('/wp-content/uploads/card-images/default-card.jpg')); ?>';">
                         </a>
                     </div>
                     <div class="card-info" style="color: #fff;">
